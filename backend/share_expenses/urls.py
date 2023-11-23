@@ -1,5 +1,5 @@
 """
-URL configuration for server project.
+URL configuration for share_expenses project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -15,12 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from backend_api.views import (
+    TelegramUserViewSet,
+    PlaceViewSet,
+    UserViewSet,
+    ExpenseViewSet,
+    MoneyTransferViewSet,
+)
+from rest_framework import routers
 
-from accounts.urls import accounts_urlpatterns
+router = routers.DefaultRouter()
+router.register(r"TelegramUser", TelegramUserViewSet)
+router.register(r"Place", PlaceViewSet)
+router.register(r"User", UserViewSet)
+router.register(r"Expense", ExpenseViewSet)
+router.register(r"MoneyTransfer", MoneyTransferViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    path("api/v1/", include(router.urls)),
 ]
-
-urlpatterns += accounts_urlpatterns # add URLs for authentication
