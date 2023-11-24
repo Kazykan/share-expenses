@@ -1,14 +1,14 @@
-import { IPlace } from "../../models"
+import { IExpense, } from "../../models"
 
-interface PlaceProps {
-  place: IPlace
+interface ExpenseProps {
+  expense: IExpense
 }
 
-export function Place({ place: place }: PlaceProps) {
+export function Expense({ expense: expense }: ExpenseProps) {
 
   return (
     <button className="h-10 px-40 font-semibold rounded-md border border-slate-200 text-slate-900 hover:bg-black hover:text-white" type="button">
-          {place.name}
+          {expense.name} - {expense.cost}руб. {expense.date} who paid: {expense.who_paid_user}
         </button>
     // <div className="border py-2 px-2 rounded flex flex-col items-center mb-2">
     //   <p>{place.name}</p>
