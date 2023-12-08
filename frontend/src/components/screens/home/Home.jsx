@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 function Home() {
   const [telegram_user_id, setTelegramUserId] = useState(1)
   const [pageState, setPageState] = useState("place")
+  const [isPlaceForm, setIsPlaceForm] = useState(false)
   const { data } = useQuery({
     queryKey: ["places"],
     queryFn: () => PlaceService.getAll(),
@@ -16,7 +17,8 @@ function Home() {
   return (
     <>
       <SiteName />
-      <CreatePlaceForm telegram_user_id={telegram_user_id}/>
+      {isPlaceForm && <CreatePlaceForm telegram_user_id={telegram_user_id} />}
+
       {pageState === "place" && (
         <div className="p-2">
           {/* TODO: есть ли элементы в списке data.length не работает */}
@@ -29,6 +31,12 @@ function Home() {
           )}
         </div>
       )}
+      <button
+        className="absolute bottom-10 right-10 rounded-full bg-blue-200 text-white text-2xl px-3 py-1"
+        onClick={() => setIsPlaceForm((prev) => !prev)}
+      >
+        +
+      </button>
     </>
   )
 }
