@@ -32,12 +32,13 @@ class UserViewSet(viewsets.ModelViewSet):
 class ExpenseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
-    filterset_fields = ("place",)
+    filterset_fields = ("place", "who_paid_user",)
 
 
 class MoneyTransferViewSet(viewsets.ModelViewSet):
     queryset = MoneyTransfer.objects.all()
     serializer_class = MoneyTransferSerializer
+    filterset_fields = ("place", "who_paid_user", "who_gets_user")
 
 
 # class PlaceView(APIView):

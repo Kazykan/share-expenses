@@ -1,8 +1,8 @@
 import { Place } from "./place.model"
 
 export interface User {
-  id?: number
+  id: number
   username: string
   id_telegram: string | null
-  place: Place
+  place: number
 }
