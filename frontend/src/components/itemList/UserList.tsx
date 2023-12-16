@@ -4,14 +4,20 @@ import { ExpenseService } from "../../services/expense.service"
 import { useQuery } from "@tanstack/react-query"
 import currencyFormatMoney from "../../services/current.format.money"
 import { PlaceIdProps } from "../../interface"
+import { useState } from "react"
 
 const UserList = ({ placeId }: PlaceIdProps) => {
-  const { data, isLoading, isSuccess } = useUsersQuery(placeId)
+  const { countUser, setCountUser } = useState<number>(0)
+  const { data: dataUsers, isLoading, isSuccess } = useUsersQuery(placeId)
 
   const { data: dataExpense } = useQuery({
     queryKey: ["expenses"],
     queryFn: () => ExpenseService.getAll(placeId),
   })
+
+  if (dataUsers?.length != undefined) {
+    setCountUser(dataUsers.length)
+  }
 
   if (isLoading) return <div>Loading...</div>
 
@@ -19,7 +25,7 @@ const UserList = ({ placeId }: PlaceIdProps) => {
     <div className="px-4">
       <ol className="relative border-s border-gray-200 dark:border-gray-700">
         {isSuccess &&
-          data.map((placeUser: User) => (
+          dataUsers.map((placeUser: User) => (
             <>
               <li className="mb-6 ms-4 pt-2" key={placeUser.id}>
                 <div className="mb-2 flex justify-between text-l font-semibold text-gray-900 dark:text-white">
@@ -38,6 +44,16 @@ const UserList = ({ placeId }: PlaceIdProps) => {
                         )
                         .reduce((total, expense) => total + expense.cost, 0)
                     )}
+                    <p>
+                      Потратили всего:
+                      {currencyFormatMoney(
+                        dataExpense?.reduce(
+                          (total, expense) => total + expense.cost,
+                          0
+                        )
+                      )}
+                      {dataExpense && dataExpense.length}
+                    </p>
                   </div>
                 </div>
               </li>
