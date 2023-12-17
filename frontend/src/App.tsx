@@ -2,7 +2,7 @@ import { Tab, Dialog, Transition } from "@headlessui/react"
 import { Fragment, useState } from "react"
 import ExpenseList from "./components/itemList/ExpenseList"
 import SiteName from "./components/screens/home/SiteName"
-import { UserList } from "./components/itemList/UserList"
+import  UserList from "./components/itemList/UserList"
 import ExpenseForm from "./components/forms/ExpenseForm"
 import MoneyTransferList from "./components/itemList/MoneyTransferList"
 

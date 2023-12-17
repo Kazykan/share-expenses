@@ -1,8 +1,9 @@
 import axios from "axios"
 import { MoneyTransfer } from "../components/models/moneyTransfer.model"
+import { PlaceIdProps } from "../interface"
 
 export const MoneyTransferService = {
-  async getAll(PlaceId: number) {
+  async getAll(PlaceId: PlaceIdProps) {
     const response = await axios.get<MoneyTransfer[]>(
       `http://127.0.0.1:8000/api/v1/MoneyTransfer/?place=${PlaceId}`
       )
@@ -14,6 +15,6 @@ export const MoneyTransferService = {
   },
 
   delete(id: number) {
-    return axios.delete(`http://127.0.0.1:8000/api/v1/Expense/${id}/`)
+    return axios.delete(`http://127.0.0.1:8000/api/v1/MoneyTransfer/${id}/`)
   },
 }

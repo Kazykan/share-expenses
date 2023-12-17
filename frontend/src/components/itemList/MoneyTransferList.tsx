@@ -4,14 +4,11 @@ import { UserService } from "../../services/user.service"
 import { PlaceIdProps } from "../../interface"
 import { MoneyTransferService } from "../../services/moneyTransfer.service"
 import { MoneyTransfer } from "../models/moneyTransfer.model"
+import { useMoneyTransfersQuery } from "../../hooks/useMoneyTransfersQuery"
 
 function MoneyTransferList({ placeId }: PlaceIdProps) {
+  const {data: dataMoneyTransfer} = useMoneyTransfersQuery(placeId)
   const queryClient = useQueryClient()
-
-  const { data: dataMoneyTransfer } = useQuery({
-    queryKey: ["moneyTransfers", placeId],
-    queryFn: () => MoneyTransferService.getAll(placeId),
-  })
 
   const { data: dataUsers } = useQuery({
     queryKey: ["users"],
