@@ -7,13 +7,13 @@ import ExpenseForm from "./components/forms/ExpenseForm"
 import MoneyTransferList from "./components/itemList/MoneyTransferList"
 import DeptAdviceList from "./components/itemList/DeptAdviceList"
 import UserForm from "./components/forms/UserForm"
+import MoneyTransferForm from "./components/forms/MoneyTransferForm"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [placeId, setPlaceId] = useState(1)
   const [isModalForm, setIsModalForm] = useState<boolean>(false)
-console.log(selectedIndex)
 
   return (
     <>
@@ -49,7 +49,7 @@ console.log(selectedIndex)
       ): ''}
 
       {isModalForm && selectedIndex == 3 ?(
-        <UserForm setIsModalForm={setIsModalForm} placeId={placeId} />
+        <MoneyTransferForm setIsModalForm={setIsModalForm} placeId={placeId} />
       ): ''}
 
       <button

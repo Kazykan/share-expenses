@@ -1,11 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { Fragment } from "react"
 import CreateExpenseForm from "./CreateExpenseForm"
-
-interface setIsModalFormProps {
-  setIsModalForm: React.Dispatch<React.SetStateAction<boolean>>
-  placeId: number
-}
+import { setIsModalFormProps } from "../models/props.model"
 
 export default function ExpenseForm({
   setIsModalForm,
@@ -32,7 +28,7 @@ export default function ExpenseForm({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex min-h-full justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -49,7 +45,7 @@ export default function ExpenseForm({
                   >
                     Добавить расходы
                   </Dialog.Title>
-                  <CreateExpenseForm placeId={placeId} />
+                  <CreateExpenseForm setIsModalForm={setIsModalForm} placeId={placeId} />
 
                   <div className="mt-4">
                     <button

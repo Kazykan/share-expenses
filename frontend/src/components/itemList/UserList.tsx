@@ -137,8 +137,6 @@ function UserList({ placeId }: PlaceIdProps) {
     return tNewTransfer // отдаем его
   }
 
-  console.log(FinalTransfer())
-
   // if (dataUsers?.length != undefined) {
   //   setCountUser(dataUsers.length)
   // }

@@ -11,7 +11,7 @@ export const MoneyTransferService = {
   },
 
   create(data: MoneyTransfer) {
-    return axios.post("http://127.0.0.1:8000/api/v1/Expense/", data)
+    return axios.post("http://127.0.0.1:8000/api/v1/MoneyTransfer/", data)
   },
 
   delete(id: number) {
