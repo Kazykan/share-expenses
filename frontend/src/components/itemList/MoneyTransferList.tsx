@@ -5,15 +5,12 @@ import { PlaceIdProps } from "../../interface"
 import { MoneyTransferService } from "../../services/moneyTransfer.service"
 import { MoneyTransfer } from "../models/moneyTransfer.model"
 import { useMoneyTransfersQuery } from "../../hooks/useMoneyTransfersQuery"
+import { useUsersQuery } from "../../hooks/useUsersQuery"
 
 function MoneyTransferList({ placeId }: PlaceIdProps) {
   const {data: dataMoneyTransfer} = useMoneyTransfersQuery(placeId)
+  const { data: dataUsers, isLoading, isSuccess } = useUsersQuery(placeId)
   const queryClient = useQueryClient()
-
-  const { data: dataUsers } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => UserService.getAll(placeId),
-  })
 
   const mutation = useMutation({
     mutationFn: (id) => MoneyTransferService.delete(id),

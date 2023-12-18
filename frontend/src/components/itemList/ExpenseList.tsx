@@ -4,14 +4,11 @@ import { ExpenseService } from "../../services/expense.service"
 import { Expense } from "../models/expense.model"
 import { UserService } from "../../services/user.service"
 import { PlaceIdProps } from "../../interface"
+import { useExpensesQuery } from "../../hooks/useExpensesQuery"
 
 function ExpenseList({ placeId }: PlaceIdProps) {
+  const { data: dataExpense } = useExpensesQuery(placeId)
   const queryClient = useQueryClient()
-
-  const { data: dataExpense } = useQuery({
-    queryKey: ["expenses", placeId],
-    queryFn: () => ExpenseService.getAll(placeId),
-  })
 
   const { data: dataUsers } = useQuery({
     queryKey: ["users"],
