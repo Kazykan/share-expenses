@@ -5,15 +5,12 @@ import { useQuery } from "@tanstack/react-query"
 import currencyFormatMoney from "../../services/current.format.money"
 import { PlaceIdProps } from "../../interface"
 import { useMoneyTransfersQuery } from "../../hooks/useMoneyTransfersQuery"
+import { useExpensesQuery } from "../../hooks/useExpensesQuery"
 
 function UserList({ placeId }: PlaceIdProps) {
   const { data: dataUsers, isLoading, isSuccess } = useUsersQuery(placeId)
   const { data: dataMoneyTransfer } = useMoneyTransfersQuery(placeId)
-
-  const { data: dataExpense } = useQuery({
-    queryKey: ["expenses"],
-    queryFn: () => ExpenseService.getAll(placeId),
-  })
+  const { data: dataExpense } = useExpensesQuery(placeId)
 
   function userExpensesSum(userId: number) {
     var sum = dataExpense
@@ -85,52 +82,61 @@ function UserList({ placeId }: PlaceIdProps) {
     uTab.sort((a, b) => (a.balance < b.balance ? 1 : -1))
 
     while (uTab.length !== 0) {
-    // Удаляем из уравнения элементы с 0 суммой
-    uTab.sort((a, b) => (a.balance < b.balance ? 1 : -1))
-    for (let i = 0; i < uTab.length; i++) {
-      if (uTab[i].balance == 0) {
-        uTab.splice(i, 1)
+      // Сортировка В начале кому должны, потом кто должен
+      uTab.sort((a, b) => (a.balance < b.balance ? 1 : -1))
+      // Удаляем из уравнения элементы с 0 суммой
+      for (let i = 0; i < uTab.length; i++) {
+        if (uTab[i].balance == 0) {
+          uTab.splice(i, 1)
+        }
+      }
+      // Если длина равно 0 выходим из цикла
+      if (uTab.length == 0) {
+        break
+      }
+
+      // Кому должны больше всего (+) сумма, берем 1-го и кто должен больше всего (-) берем сумму последнего
+      // Если сумма (-) должен меньше (+) суммы считаем, если нет то запускаем другой if
+      // Например Антон должен -500р. а Мише должны 400р. если сложит 400 - 500 = -100р. тогда запускаем другой if он ниже
+      // firstMinusEnd > -1 (Вот это сравнение ниже)
+      const firstMinusEnd = uTab[0].balance + uTab[uTab.length - 1].balance
+      if (
+        uTab[0].balance > 0 &&
+        uTab[uTab.length - 1].balance < 0 &&
+        firstMinusEnd > -1
+      ) {
+        // создаем запись для предложения о переводе
+        const temp = {
+          amount: uTab[uTab.length - 1].balance * -1,
+          date: null,
+          who_paid_user: uTab[uTab.length - 1].id,
+          who_gets_user: uTab[0].id,
+          place: placeId,
+        }
+        // обновляем значения в таблице кто должен прибавляем потому что у него сумма отрицательная
+        uTab[0].balance = uTab[0].balance + uTab[uTab.length - 1].balance
+        // обновляем баланс последнего на 0,
+        // т.к. он переводит первому всю сумму долга, если это не так, то срабатывает второй if он ниже
+        uTab[uTab.length - 1].balance = 0
+
+        tNewTransfer.push(temp)
+      } else if (uTab[0].balance > 0) {
+        const balanceOwed = uTab[0].balance + uTab[uTab.length - 1].balance
+        const temp = {
+          amount: (uTab[uTab.length - 1].balance - balanceOwed) * -1,
+          date: null,
+          who_paid_user: uTab[uTab.length - 1].id,
+          who_gets_user: uTab[0].id,
+          place: placeId,
+        }
+        uTab[0].balance =
+          uTab[0].balance + uTab[uTab.length - 1].balance - balanceOwed
+        uTab[uTab.length - 1].balance = balanceOwed
+
+        tNewTransfer.push(temp) // добавляем объект в массив
       }
     }
-    if (uTab.length == 0) {
-      break
-    }
-
-    const firstMinusEnd = uTab[0].balance + uTab[uTab.length - 1].balance
-    if (
-      uTab[0].balance > 0 &&
-      uTab[uTab.length - 1].balance < 0 &&
-      firstMinusEnd > -1
-    ) {
-      const temp = {
-        amount: uTab[uTab.length - 1].balance * -1,
-        date: null,
-        who_paid_user: uTab[uTab.length - 1].id,
-        who_gets_user: uTab[0].id,
-        place: placeId,
-      }
-      uTab[0].balance = uTab[0].balance + uTab[uTab.length - 1].balance
-
-      uTab[uTab.length - 1].balance = 0
-
-      tNewTransfer.push(temp)
-    } else if (uTab[0].balance > 0) {
-      const balanceOwed = uTab[0].balance + uTab[uTab.length - 1].balance
-      const temp = {
-        amount: (uTab[uTab.length - 1].balance - balanceOwed) * -1,
-        date: null,
-        who_paid_user: uTab[uTab.length - 1].id,
-        who_gets_user: uTab[0].id,
-        place: placeId,
-      }
-      uTab[0].balance =
-        uTab[0].balance + uTab[uTab.length - 1].balance - balanceOwed
-      uTab[uTab.length - 1].balance = balanceOwed
-
-      tNewTransfer.push(temp)
-    }
-    }
-    return tNewTransfer
+    return tNewTransfer // отдаем его
   }
 
   console.log(FinalTransfer())
