@@ -6,6 +6,7 @@ import  UserList from "./components/itemList/UserList"
 import ExpenseForm from "./components/forms/ExpenseForm"
 import MoneyTransferList from "./components/itemList/MoneyTransferList"
 import DeptAdviceList from "./components/itemList/DeptAdviceList"
+import UserForm from "./components/forms/UserForm"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
@@ -39,9 +40,17 @@ console.log(selectedIndex)
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
-      {isModalForm && (
+      {isModalForm && selectedIndex == 0 ?(
         <ExpenseForm setIsModalForm={setIsModalForm} placeId={placeId} />
-      )}
+      ): ''}
+
+      {isModalForm && selectedIndex == 2 ?(
+        <UserForm setIsModalForm={setIsModalForm} placeId={placeId} />
+      ): ''}
+
+      {isModalForm && selectedIndex == 3 ?(
+        <UserForm setIsModalForm={setIsModalForm} placeId={placeId} />
+      ): ''}
 
       <button
         className="absolute bottom-5 right-5 rounded-full bg-blue-200 text-white text-2xl px-3 py-1"

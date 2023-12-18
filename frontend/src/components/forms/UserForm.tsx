@@ -1,13 +1,13 @@
 import { Dialog, Transition } from "@headlessui/react"
 import { Fragment } from "react"
-import CreateExpenseForm from "./CreateExpenseForm"
+import CreateUserForm from "./CreateUserForm"
 
 interface setIsModalFormProps {
   setIsModalForm: React.Dispatch<React.SetStateAction<boolean>>
   placeId: number
 }
 
-export default function ExpenseForm({
+export default function UserForm({
   setIsModalForm,
   placeId,
 }: setIsModalFormProps) {
@@ -47,9 +47,9 @@ export default function ExpenseForm({
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Добавить расходы
+                    Добавить пользователя
                   </Dialog.Title>
-                  <CreateExpenseForm placeId={placeId} />
+                  <CreateUserForm placeId={placeId} />
 
                   <div className="mt-4">
                     <button

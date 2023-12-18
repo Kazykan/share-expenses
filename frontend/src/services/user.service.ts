@@ -1,5 +1,5 @@
 import axios from "axios"
-import { User } from "../components/models/user.model"
+import { User, inputUserProps } from "../components/models/user.model"
 import { PlaceIdProps } from "../interface"
 
 export const UserService = {
@@ -11,7 +11,7 @@ export const UserService = {
     return response.data
   },
 
-  create(data: User) {
+  create(data: inputUserProps) {
     return axios.post("http://127.0.0.1:8000/api/v1/User/", data)
   },
 

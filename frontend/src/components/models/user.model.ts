@@ -6,3 +6,10 @@ export interface User {
   id_telegram: string | null
   place: number
 }
+
+export interface inputUserProps {
+  username: string
+  id_telegram: string | null
+  place: number
+}
+

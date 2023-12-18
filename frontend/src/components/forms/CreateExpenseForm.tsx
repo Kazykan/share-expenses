@@ -10,9 +10,11 @@ import { Expense } from "../models/expense.model"
 import ReactSelect from "react-select"
 import { User } from "../models/user.model"
 import { PlaceIdProps } from "../../interface"
-import { UserService } from "../../services/user.service"
+import { useUsersQuery } from "../../hooks/useUsersQuery"
 
-const CreatePlaceForm = ({ placeId }: PlaceIdProps) => {
+const CreateExpenseForm = ({ placeId }: PlaceIdProps) => {
+  const { data: dataUsers } = useUsersQuery(placeId)
+
   const {
     register,
     handleSubmit,
@@ -34,11 +36,6 @@ const CreatePlaceForm = ({ placeId }: PlaceIdProps) => {
     value: number
     label: string
   }
-
-  const { data: dataUsers } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => UserService.getAll(placeId),
-  })
 
   function convertUserForSelectForm(dataUsers: User[]) {
     if (dataUsers) {
@@ -122,4 +119,4 @@ const CreatePlaceForm = ({ placeId }: PlaceIdProps) => {
   )
 }
 
-export default CreatePlaceForm
+export default CreateExpenseForm
