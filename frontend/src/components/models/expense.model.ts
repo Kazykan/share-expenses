@@ -6,3 +6,4 @@ export interface Expense {
   who_paid_user: number
   place: number
 }
+

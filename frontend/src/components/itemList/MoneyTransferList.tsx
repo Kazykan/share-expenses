@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import currencyFormatMoney from "../../services/current.format.money"
-import { UserService } from "../../services/user.service"
 import { PlaceIdProps } from "../../interface"
 import { MoneyTransferService } from "../../services/moneyTransfer.service"
 import { MoneyTransfer } from "../models/moneyTransfer.model"
@@ -9,7 +8,7 @@ import { useUsersQuery } from "../../hooks/useUsersQuery"
 
 function MoneyTransferList({ placeId }: PlaceIdProps) {
   const {data: dataMoneyTransfer} = useMoneyTransfersQuery(placeId)
-  const { data: dataUsers, isLoading, isSuccess } = useUsersQuery(placeId)
+  const { data: dataUsers } = useUsersQuery(placeId)
   const queryClient = useQueryClient()
 
   const mutation = useMutation({

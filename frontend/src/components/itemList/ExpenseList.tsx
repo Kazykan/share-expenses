@@ -2,18 +2,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import currencyFormatMoney from "../../services/current.format.money"
 import { ExpenseService } from "../../services/expense.service"
 import { Expense } from "../models/expense.model"
-import { UserService } from "../../services/user.service"
 import { PlaceIdProps } from "../../interface"
 import { useExpensesQuery } from "../../hooks/useExpensesQuery"
+import { useUsersQuery } from "../../hooks/useUsersQuery"
 
 function ExpenseList({ placeId }: PlaceIdProps) {
   const { data: dataExpense } = useExpensesQuery(placeId)
-  const queryClient = useQueryClient()
+  const { data: dataUsers } = useUsersQuery(placeId)
 
-  const { data: dataUsers } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => UserService.getAll(placeId),
-  })
+  const queryClient = useQueryClient()
 
   const mutation = useMutation({
     mutationFn: (id) => ExpenseService.delete(id),
@@ -47,14 +44,15 @@ function ExpenseList({ placeId }: PlaceIdProps) {
                     }
                   </div>
                   <div>
-                    {expense.id && <a
-                      href="#"
-                      className="inline-block px-2 py-0.5 text-sm font-sm rounded-md bg-blue-200 dark:bg-violet-400 dark:text-gray-900"
-                      onClick={() => mutation.mutate(expense.id)}
-                    >
-                      Удалить
-                    </a>}
-                   {" "}
+                    {expense.id && (
+                      <a
+                        href="#"
+                        className="inline-block px-2 py-0.5 text-sm font-sm rounded-md bg-blue-200 dark:bg-violet-400 dark:text-gray-900"
+                        onClick={() => mutation.mutate(expense.id)}
+                      >
+                        Удалить
+                      </a>
+                    )}{" "}
                     Ред.
                   </div>
                 </div>

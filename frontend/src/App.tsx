@@ -5,12 +5,14 @@ import SiteName from "./components/screens/home/SiteName"
 import  UserList from "./components/itemList/UserList"
 import ExpenseForm from "./components/forms/ExpenseForm"
 import MoneyTransferList from "./components/itemList/MoneyTransferList"
+import DeptAdviceList from "./components/itemList/DeptAdviceList"
 
 export function App() {
-  const tableName = ["Расходы", "Баланс", "Участники", "Переводы"]
+  const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [placeId, setPlaceId] = useState(1)
   const [isModalForm, setIsModalForm] = useState<boolean>(false)
+console.log(selectedIndex)
 
   return (
     <>
@@ -27,7 +29,8 @@ export function App() {
           <Tab.Panel>
             <ExpenseList placeId={placeId} />
           </Tab.Panel>
-          <Tab.Panel>Content 2</Tab.Panel>
+          <Tab.Panel>
+            <DeptAdviceList placeId={placeId} /></Tab.Panel>
           <Tab.Panel>
             <UserList placeId={placeId} />
           </Tab.Panel>

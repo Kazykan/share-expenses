@@ -5,7 +5,7 @@ import { PlaceIdProps } from "../../interface"
 import { useMoneyTransfersQuery } from "../../hooks/useMoneyTransfersQuery"
 import { useExpensesQuery } from "../../hooks/useExpensesQuery"
 
-function UserList({ placeId }: PlaceIdProps) {
+function DeptAdviceList({ placeId }: PlaceIdProps) {
   const { data: dataUsers, isLoading, isSuccess } = useUsersQuery(placeId)
   const { data: dataMoneyTransfer } = useMoneyTransfersQuery(placeId)
   const { data: dataExpense } = useExpensesQuery(placeId)
@@ -137,7 +137,7 @@ function UserList({ placeId }: PlaceIdProps) {
     return tNewTransfer // отдаем его
   }
 
-  console.log(FinalTransfer())
+  const finalTransferList = FinalTransfer()
 
   // if (dataUsers?.length != undefined) {
   //   setCountUser(dataUsers.length)
@@ -148,40 +148,57 @@ function UserList({ placeId }: PlaceIdProps) {
   return (
     <div className="px-4">
       <ol className="relative border-s border-gray-200 dark:border-gray-700">
-        {isSuccess &&
-          dataUsers.map((placeUser: User) => (
-            <>
-              <li className="mb-6 ms-4 pt-2" key={placeUser.id}>
-                <div className="mb-2 flex justify-between text-l font-semibold text-gray-900 dark:text-white">
-                  <div>{placeUser.username}&nbsp;</div>
-                  <div className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    Удалить Ред.
-                  </div>
+        {finalTransferList ? (
+          finalTransferList.map((moneyTransfer, index) => (
+            <li className="mb-6 ms-4 pt-2" key={index}>
+              <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+              <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                {moneyTransfer.date}
+              </time>
+              <div className="mb-2 flex justify-between text-l font-semibold text-gray-900 dark:text-white">
+                <div>
+                  {
+                    dataUsers?.find(
+                      (user) => user.id === moneyTransfer.who_paid_user
+                    )?.username
+                  }{" "}
+                  {" =>"}{" "}
                 </div>
-                <div className="flex justify-between mb-2 text-sm font-normal text-gray-500 dark:text-gray-400">
-                  <div>
-                    Потратил(a) всего:{" "}
-                    {currencyFormatMoney(userExpensesSum(placeUser.id))}
-                    <p>
-                      Баланс:
-                      {BalanceUser(placeUser.id) >= 0 ? (
-                        <div className="text-green-300">
-                          {currencyFormatMoney(BalanceUser(placeUser.id))}
-                        </div>
-                      ) : (
-                        <div className="text-red-400">
-                          {currencyFormatMoney(BalanceUser(placeUser.id))}
-                        </div>
-                      )}
-                    </p>
-                  </div>
+                <div>{currencyFormatMoney(moneyTransfer.amount)}</div>
+              </div>
+              <div className="flex justify-between mb-2 text-sm font-normal text-gray-500 dark:text-gray-400">
+                <div>
+                  Перевел(а): &nbsp;
+                  {
+                    dataUsers?.find(
+                      (user) => user.id === moneyTransfer.who_gets_user
+                    )?.username
+                  }
                 </div>
-              </li>
-            </>
-          ))}
+                <div>
+                    
+                  {/* {moneyTransfer.id && (
+                    <a
+                      href="#"
+                      className="inline-block px-2 py-0.5 text-sm font-sm rounded-md bg-blue-200 dark:bg-violet-400 dark:text-gray-900"
+                      onClick={() => mutation.mutate(moneyTransfer.id)}
+                    >
+                      Удалить
+                    </a>
+                  )}{" "} */}
+                  Удалить Ред.
+                </div>
+              </div>
+            </li>
+          ))
+        ) : (
+          <h2 className="text-lg font-medium text-gray-800 dark:text-white">
+            Поездок нет
+          </h2>
+        )}
       </ol>
     </div>
   )
 }
 
-export default UserList
+export default DeptAdviceList
