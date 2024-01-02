@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
             name='TelegramUser',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('telegram_user_id', models.IntegerField()),
+                ('id_telegram_app', models.IntegerField()),
                 ('username', models.CharField(max_length=100)),
             ],
         ),
