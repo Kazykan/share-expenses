@@ -16,8 +16,19 @@ router = APIRouter(tags=["Members"])
 @router.get("/", response_model=list[Member])
 async def get_members(
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    place_id: int | None = None,
 ):
-    return await crud.get_members(session=session)
+    if place_id is not None:
+        member = await crud.get_member_by_place_id(session=session, place_id=place_id)
+        if member is not None:
+            return member
+
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Member {place_id} not found!",
+        )
+    else:
+        return await crud.get_members(session=session)
 
 
 @router.post(
@@ -35,21 +46,21 @@ async def create_member(
     )
 
 
-@router.get("/{place_id}/", response_model=list[Member])
-async def get_member(
-    place_id: int,
-    session: AsyncSession = Depends(db_helper.session_dependency),
-):
-    member = await crud.get_member_by_place_id(
-        session=session, place_id=place_id
-    )
-    if member is not None:
-        return member
+# @router.get("/{place_id}/", response_model=list[Member])
+# async def get_member(
+#     place_id: int,
+#     session: AsyncSession = Depends(db_helper.session_dependency),
+# ):
+#     member = await crud.get_member_by_place_id(
+#         session=session, place_id=place_id
+#     )
+#     if member is not None:
+#         return member
 
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Member {place_id} not found!",
-    )
+#     raise HTTPException(
+#         status_code=status.HTTP_404_NOT_FOUND,
+#         detail=f"Member {place_id} not found!",
+#     )
 
 
 @router.put("/{place_id}/")

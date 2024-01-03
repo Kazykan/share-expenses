@@ -15,12 +15,17 @@ async def get_expenses(session: AsyncSession) -> list[Expense]:
 
 async def get_expense_by_place_id(
     session: AsyncSession,
-    place_id: int,
+    place_id: int | None,
+    who_paid_member_id: int | None
 ) -> Expense | None:
-    """Ищем пользователя по полю place_id"""
-    stmt = select(Expense).where(Expense.place_id == place_id)
+    """Ищем пользователя по полю place_id или who_paid_member_id"""
+    stmt = select(Expense)
+    if place_id is not None:
+        stmt = stmt.where(Expense.place_id == place_id)
+    if who_paid_member_id is not None:
+        stmt = stmt.where(Expense.who_paid_member_id == who_paid_member_id)
     result: Result = await session.execute(stmt)
-    products = result.scalar()
+    products = result.scalars().all()
     return products
 
 

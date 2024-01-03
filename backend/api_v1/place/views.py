@@ -16,8 +16,21 @@ router = APIRouter(tags=["Places"])
 @router.get("/", response_model=list[Place])
 async def get_places(
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
+    web_app_user_id: int | None = None,
 ):
-    return await crud.get_places(session=session)
+    if web_app_user_id is not None:
+        places = await crud.get_place_by_web_app_user_id(
+            session=session, web_app_user_id=web_app_user_id
+        )
+        if places is not None:
+            return places
+
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"WebAppUser {web_app_user_id} not found!",
+        )
+    else:
+        return await crud.get_places(session=session)
 
 
 @router.post(
@@ -36,21 +49,21 @@ async def create_place(
     )
 
 
-@router.get("/{web_app_user_id}/", response_model=list[Place])
-async def get_place(
-    web_app_user_id: int,
-    session: AsyncSession = Depends(db_helper.session_dependency),
-):
-    places = await crud.get_place_by_web_app_user_id(
-        session=session, web_app_user_id=web_app_user_id
-    )
-    if places is not None:
-        return places
+# @router.get("/{web_app_user_id}/", response_model=list[Place])
+# async def get_place(
+#     web_app_user_id: int,
+#     session: AsyncSession = Depends(db_helper.session_dependency),
+# ):
+#     places = await crud.get_place_by_web_app_user_id(
+#         session=session, web_app_user_id=web_app_user_id
+#     )
+#     if places is not None:
+#         return places
 
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"WebAppUser {web_app_user_id} not found!",
-    )
+#     raise HTTPException(
+#         status_code=status.HTTP_404_NOT_FOUND,
+#         detail=f"WebAppUser {web_app_user_id} not found!",
+#     )
 
 
 @router.put("/{web_app_user_id}/")
