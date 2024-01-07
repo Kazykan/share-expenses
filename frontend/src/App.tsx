@@ -2,10 +2,7 @@ import { Tab } from "@headlessui/react"
 import { useEffect, useMemo, useState } from "react"
 import { IWebApp } from "./telegram/t.types"
 import SiteName from "./components/screens/home/SiteName"
-import { useQueryClient } from "@tanstack/react-query"
 import { useTUser } from "./hooks/t.user.queries"
-import { axiosInstance } from "./services/api"
-import { TelegramUser } from "./components/models/telegramuser.model"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
@@ -13,7 +10,7 @@ export function App() {
   const [placeId, setPlaceId] = useState<number>(0)
   // const [isModalForm, setIsModalForm] = useState<boolean>(false)
   const [IdTelegramApp, setIdTelegramApp] = useState<number | undefined>(
-    undefined
+    172457394
   )
   const TUserQuery = useTUser(IdTelegramApp)
 
@@ -25,6 +22,7 @@ export function App() {
       telegram.ready()
       setWebApp(telegram)
     }
+    setPlaceId(0) // Чтоб не было ошибок
   }, [])
 
   const tg = useMemo(() => {
@@ -37,12 +35,10 @@ export function App() {
   }, [webApp])
 
   useEffect(() => {
-    if (typeof tg.tg?.initDataUnsafe?.user?.id === "number") {
-      setIdTelegramApp((_) => tg.tg?.initDataUnsafe?.user?.id)
+    if (typeof tg.user?.id === "number") {
+      setIdTelegramApp((_) => tg.user?.id)
     }
-    // setIdTelegramApp((_) => 123)
-
-
+    setIdTelegramApp((_) => 172457394)
   }, [webApp?.initDataUnsafe?.user?.id])
 
   // useEffect( () => {
@@ -55,11 +51,16 @@ export function App() {
     <>
       {/* Окно в telegram на весь экран */}
       {tg && tg.tg?.expand()}
-      {tg.user?.first_name}
+      {tg.user?.first_name}{' '}{tg.user?.id}
       <SiteName />
       {IdTelegramApp}
+      {typeof IdTelegramApp}
       <p>
-        {TUserQuery?.data?.id} {TUserQuery?.data?.telegram_user_id}{" "}
+      {TUserQuery && (
+        <>
+        id: {TUserQuery.data?.id}
+        </>)}
+        {TUserQuery?.data?.telegram_user_id}{" "}
         {TUserQuery?.data?.username}
       </p>
       {placeId ? (

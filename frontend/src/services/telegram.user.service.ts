@@ -3,14 +3,13 @@ import { axiosInstance } from "./api"
 
 export const TUserService = {
   async get(id_telegram_app: number | undefined) {
-    const tempList = []
     console.log(`get ${id_telegram_app}`)
     if (id_telegram_app === undefined) return undefined
 
     const response = await axiosInstance.get<TelegramUser>(
       `webAppUsers/?telegram_user_id=${id_telegram_app}`
     )
-    console.log(response.data)
+    // console.log(response.data)
     if (response.data) {
       return response.data
     } else {

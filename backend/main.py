@@ -28,6 +28,7 @@ origins = [
     "http://localhost:5173",
     "127.0.0.1:46532",
     DOMAIN,
+    "https://kocherbaev.ru"
 ]
 
 app.add_middleware(
@@ -55,4 +56,4 @@ def create_user(user: CreateUser):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", reload=True)
+    uvicorn.run("main:app", reload=True, )
