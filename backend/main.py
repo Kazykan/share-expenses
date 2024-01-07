@@ -1,4 +1,3 @@
-from conf import DOMAIN
 from fastapi import FastAPI
 from pydantic import BaseModel, EmailStr
 import uvicorn
@@ -27,7 +26,6 @@ origins = [
     "http://localhost:8080",
     "http://localhost:5173",
     "127.0.0.1:46532",
-    DOMAIN,
     "https://kocherbaev.ru"
 ]
 
