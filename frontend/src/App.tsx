@@ -40,7 +40,7 @@ export function App() {
     if (typeof tg.tg?.initDataUnsafe?.user?.id === "number") {
       setIdTelegramApp((_) => tg.tg?.initDataUnsafe?.user?.id)
     }
-    setIdTelegramApp((_) => 22222222)
+    // setIdTelegramApp((_) => 123)
 
 
   }, [webApp?.initDataUnsafe?.user?.id])

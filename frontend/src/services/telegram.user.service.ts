@@ -8,11 +8,8 @@ export const TUserService = {
     if (id_telegram_app === undefined) return undefined
 
     const response = await axiosInstance.get<TelegramUser>(
-      `webAppUsers/${id_telegram_app}/`
+      `webAppUsers/?telegram_user_id=${id_telegram_app}`
     )
-    // const response = await axiosInstance.get<TelegramUser[]>(
-    //   `TelegramUser/?id_telegram_app=${id_telegram_app}`
-    // )
     console.log(response.data)
     if (response.data) {
       return response.data
