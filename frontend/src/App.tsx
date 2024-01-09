@@ -44,14 +44,9 @@ export function App() {
     <>
       {/* Окно в telegram на весь экран */}
       {tg && tg.tg?.expand()}
-      {/* {tg.user?.first_name} {tg.user?.id} */}
+
       <Navbars setIsModalForm={setIsModalForm} />
-      {/* {IdTelegramApp}
-      {typeof IdTelegramApp} */}
-      <p>
-        {/* {TUserQuery && <>id: {TUserQuery.data?.id}</>} */}
-        {/* {TUserQuery?.data?.telegram_user_id} {TUserQuery?.data?.username} */}
-      </p>
+
       {isModalForm && (
         <PlaceForm
           setIsModalForm={setIsModalForm}
@@ -84,11 +79,15 @@ export function App() {
           <img src={"./Share-expenses_add_place.png"} className="px-6 py-1" />
 
           <p className="p-3 mt-1 text-sm text-gray-500 dark:text-gray-300">
-            {tg.user?.username} Разделите расходы в поездках и
-            мероприятиях. Добавьте место для начало работы.
+            {tg.user?.username} Разделите расходы в поездках и мероприятиях.
+            Добавьте место для начало работы.
           </p>
           {typeof tg.user?.id === "number" && (
-            <PlaceList IdTelegramApp={IdTelegramApp} setPlaceId={setPlaceId} telegram_username={tg.user?.username}/>
+            <PlaceList
+              IdTelegramApp={IdTelegramApp}
+              setPlaceId={setPlaceId}
+              telegram_username={tg.user?.username}
+            />
           )}
         </>
       )}
