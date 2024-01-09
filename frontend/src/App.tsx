@@ -92,22 +92,6 @@ export function App() {
           )}
         </>
       )}
-
-      <div className="max-w-2xl mx-2 my-2 px-4 py-2 bg-white rounded-lg shadow-md dark:bg-gray-800 flex flex-row items-center">
-        <div className="mt-2">
-          <MoneyLogo />
-        </div>
-
-        <div className="mt-2 px-2">
-          <a
-            href="#"
-            className="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-            role="link"
-          >
-            Arhyz авпваыпывап
-          </a>
-        </div>
-      </div>
       {/* <button
         className="absolute bottom-5 right-5 rounded-full bg-blue-200 text-white text-2xl px-4 py-1 font-bold"
         onClick={() => setIsModalForm((prev) => !prev)}
