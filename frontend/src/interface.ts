@@ -1,14 +1,14 @@
 export interface PlaceIdProps {
-    placeId: number
-  }
+  placeId: number
+}
 
 export interface PlaceListProps {
-  telegramUserId: number
+  IdTelegramApp: number | undefined
   setPlaceId: React.Dispatch<React.SetStateAction<number>>
   telegram_username: string | undefined
-  }
+}
 
 export interface CreateTUserProps {
   telegramUserId: number
   telegram_username: string | undefined
-  }
+}

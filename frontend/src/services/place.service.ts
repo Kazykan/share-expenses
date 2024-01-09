@@ -1,25 +1,23 @@
-import axios from "axios"
 import { Place } from "../components/models/place.model"
-import { UrlServer } from "./crud.server.url"
+import { axiosInstance } from "./api"
 
 export const PlaceService = {
   async getAll(telegramUserId: number | undefined) {
-    console.log(`place.getAll telegramUserId: ${telegramUserId}`)
     if (telegramUserId === undefined) {
       return undefined
     }
 
-    const response = await axios.get<Place[]>(
-      `${UrlServer}Place/?name=&telegram_user_id=${telegramUserId}`
+    const response = await axiosInstance.get<Place[]>(
+      `places/?web_app_user_id=${telegramUserId}`
     )
     return response.data
   },
 
   create(data: Place) {
-    return axios.post(`${UrlServer}Place/`, data)
+    return axiosInstance.post(`places/`, data)
   },
 
   delete(id: number) {
-    return axios.delete(`${UrlServer}Place/${id}`)
+    return axiosInstance.delete(`places/${id}`)
   },
 }

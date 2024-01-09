@@ -1,9 +1,10 @@
 import { Tab } from "@headlessui/react"
 import { useEffect, useMemo, useState } from "react"
 import { IWebApp } from "./telegram/t.types"
-import SiteName from "./components/screens/home/SiteName"
-import { useTUser } from "./hooks/t.user.queries"
 import PlaceForm from "./components/forms/PlaceForm"
+import MoneyLogo from "./components/svg/money"
+import Navbars from "./components/screens/Navbars"
+import PlaceList from "./components/itemList/PlaceList"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
@@ -13,8 +14,6 @@ export function App() {
   const [IdTelegramApp, setIdTelegramApp] = useState<number | undefined>(
     172457394
   )
-  const TUserQuery = useTUser(IdTelegramApp)
-
   const [webApp, setWebApp] = useState<IWebApp | null>(null)
 
   useEffect(() => {
@@ -39,7 +38,6 @@ export function App() {
     if (typeof tg.user?.id === "number") {
       setIdTelegramApp((_) => tg.user?.id)
     }
-    // setIdTelegramApp((_) => 172457394)
   }, [webApp?.initDataUnsafe?.user?.id])
 
   return (
@@ -47,7 +45,7 @@ export function App() {
       {/* Окно в telegram на весь экран */}
       {tg && tg.tg?.expand()}
       {/* {tg.user?.first_name} {tg.user?.id} */}
-      <SiteName />
+      <Navbars setIsModalForm={setIsModalForm} />
       {/* {IdTelegramApp}
       {typeof IdTelegramApp} */}
       <p>
@@ -86,38 +84,30 @@ export function App() {
           <img src={"./Share-expenses_add_place.png"} className="px-6 py-1" />
 
           <p className="p-3 mt-1 text-sm text-gray-500 dark:text-gray-300">
-            {TUserQuery?.data?.username} Разделите расходы в поездках и
+            {tg.user?.username} Разделите расходы в поездках и
             мероприятиях. Добавьте место для начало работы.
           </p>
-          <button
-            type="button"
-            className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-            onClick={() => setIsModalForm((prev) => !prev)}
-          >
-            Добавить место
-            <svg
-              className="flex-shrink-0 w-4 h-4"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="m5 11 4-7" />
-              <path d="m19 11-4-7" />
-              <path d="M2 11h20" />
-              <path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8c.9 0 1.8-.7 2-1.6l1.7-7.4" />
-              <path d="m9 11 1 9" />
-              <path d="M4.5 15.5h15" />
-              <path d="m15 11-1 9" />
-            </svg>
-          </button>
+          {typeof tg.user?.id === "number" && (
+            <PlaceList IdTelegramApp={IdTelegramApp} setPlaceId={setPlaceId} telegram_username={tg.user?.username}/>
+          )}
         </>
       )}
+
+      <div className="max-w-2xl mx-2 my-2 px-4 py-2 bg-white rounded-lg shadow-md dark:bg-gray-800 flex flex-row items-center">
+        <div className="mt-2">
+          <MoneyLogo />
+        </div>
+
+        <div className="mt-2 px-2">
+          <a
+            href="#"
+            className="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
+            role="link"
+          >
+            Arhyz авпваыпывап
+          </a>
+        </div>
+      </div>
       {/* <button
         className="absolute bottom-5 right-5 rounded-full bg-blue-200 text-white text-2xl px-4 py-1 font-bold"
         onClick={() => setIsModalForm((prev) => !prev)}

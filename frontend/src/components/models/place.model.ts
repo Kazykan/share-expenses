@@ -1,5 +1,5 @@
 export interface Place {
   id?: number
   name: string
-  telegram_user: number
+  web_app_user_id: number
 }

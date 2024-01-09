@@ -1,6 +1,6 @@
 export interface setIsModalFormProps {
   setIsModalForm: React.Dispatch<React.SetStateAction<boolean>>
-  placeId: number
+  placeId?: number
 }
 
 export interface setIsModalFormTUserIdProps {

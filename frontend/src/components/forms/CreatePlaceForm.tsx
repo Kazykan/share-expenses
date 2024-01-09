@@ -24,7 +24,7 @@ const CreatePlaceForm = ({
   })
 
   const onSubmit = (data: any) =>
-    mutation.mutate({ ...data, telegram_user_id: telegramUserId })
+    mutation.mutate({ ...data, web_app_user_id: telegramUserId })
 
   return (
     <form className="py-2 px-" onSubmit={handleSubmit((e) => onSubmit(e))}>
