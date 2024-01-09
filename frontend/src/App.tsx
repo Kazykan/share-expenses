@@ -92,12 +92,6 @@ export function App() {
           )}
         </>
       )}
-      {/* <button
-        className="absolute bottom-5 right-5 rounded-full bg-blue-200 text-white text-2xl px-4 py-1 font-bold"
-        onClick={() => setIsModalForm((prev) => !prev)}
-      >
-        +
-      </button> */}
     </>
   )
 }
