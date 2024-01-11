@@ -13,7 +13,7 @@ class WebAppUser(Base):
     __tablename__ = "web_app_user"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    telegram_user_id: Mapped[int]
+    telegram_user_id: Mapped[int] = mapped_column(unique=True)
     username: Mapped[str]
     places: Mapped[List["Place"]] = relationship()
 

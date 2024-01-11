@@ -7,3 +7,5 @@ export function useTUser(IdTelegramApp: number | undefined) {
         queryFn: async () => TUserService.get(IdTelegramApp),
     })
 }
+
+

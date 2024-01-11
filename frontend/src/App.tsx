@@ -4,7 +4,6 @@ import { IWebApp } from "./telegram/t.types"
 import PlaceForm from "./components/forms/PlaceForm"
 import Navbars from "./components/screens/Navbars"
 import PlaceList from "./components/itemList/PlaceList"
-import { TUserService } from "./services/telegram.user.service"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
@@ -16,15 +15,8 @@ export function App() {
   )
   const [webApp, setWebApp] = useState<IWebApp | null>(null)
 
+
   useEffect(() => {
-    const telegramAppUser = TUserService.get(undefined)
-    console.log(`telegramAppUser - ${telegramAppUser}`)
-    if (telegramAppUser == undefined) {
-      console.log(`if undefined telegramAppUser`)
-    }
-
-
-
     const telegram = (window as any).Telegram.WebApp
     if (telegram) {
       telegram.ready()

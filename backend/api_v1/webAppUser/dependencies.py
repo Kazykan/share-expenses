@@ -8,7 +8,7 @@ async def webAppUser_by_id(
     web_app_user_id: Annotated[int, Path],
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
 ) -> WebAppUser:
-    """Делаем это ка зависимость"""
+    """Делаем это как зависимость"""
     webAppUser = await crud.get_webAppUser(
         session=session, web_app_user_id=web_app_user_id
     )
