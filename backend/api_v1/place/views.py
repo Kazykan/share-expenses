@@ -66,7 +66,7 @@ async def create_place(
 #     )
 
 
-@router.put("/{web_app_user_id}/")
+@router.put("/{place_id}/")
 async def update_place(
     place_update: PlaceUpdate,
     place: Place = Depends(place_by_id),
@@ -77,7 +77,7 @@ async def update_place(
     )
 
 
-@router.patch("/{web_app_user_id}/")
+@router.patch("/{place_id}/")
 async def update_place_partial(
     place_update: PlaceUpdatePartial,
     place: Place = Depends(place_by_id),
@@ -91,7 +91,7 @@ async def update_place_partial(
     )
 
 
-@router.delete("/{web_app_user_id}/", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{place_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_place(
     place: Place = Depends(place_by_id),
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),

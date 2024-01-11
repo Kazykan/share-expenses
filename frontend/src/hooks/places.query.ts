@@ -4,7 +4,7 @@ import { PlaceService } from "../services/place.service"
 const usePlacesQuery = (telegramUserId: number | undefined) => {
   return useQuery({
     queryFn: () => PlaceService.getAll(telegramUserId),
-    queryKey: ["places"],
+    queryKey: ["places", telegramUserId],
   })
 }
 

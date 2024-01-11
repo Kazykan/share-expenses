@@ -16,11 +16,12 @@ async def get_webAppUsers(session: AsyncSession) -> list[WebAppUser]:
 async def get_webAppUser_by_tUser_id(
     session: AsyncSession,
     telegram_user_id: int,
-) -> WebAppUser | None:
+) -> list[WebAppUser] | None:
     """Ищем пользователя по полю telegram_user_id"""
     stmt = select(WebAppUser).where(WebAppUser.telegram_user_id == telegram_user_id)
     result: Result = await session.execute(stmt)
-    webAppUser = result.scalar_one_or_none()
+    # webAppUser = result.scalar_one_or_none()
+    webAppUser = result.scalars.all()
     return webAppUser
 
 

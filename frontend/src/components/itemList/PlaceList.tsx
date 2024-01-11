@@ -16,20 +16,23 @@ export default function PlaceList({
   telegram_username,
 }: PlaceListProps) {
   const queryClient = useQueryClient()
-  const TUserQuery = useTUser(IdTelegramApp)
+  const { data: TUserQuery } = useTUser(IdTelegramApp)
   const { data: dataPlaces } = usePlacesQuery(IdTelegramApp)
 
   useEffect(() => {
     // Если пользователя нет создаем его в БД
-    if (TUserQuery.data === undefined && IdTelegramApp !== undefined) {
+    const telegramAppUser = TUserService.get(IdTelegramApp)
+    console.log(`useEffect 1 --- ${telegramAppUser} - ${IdTelegramApp}`)
+    if (telegramAppUser === undefined && IdTelegramApp !== undefined) {
+      console.log(`useEffect 2 --- ${telegramAppUser} - ${IdTelegramApp}`)
       const data: TelegramUser = {
         telegram_user_id: IdTelegramApp ?? 0,
         username: telegram_username ?? "",
       }
       TUserService.create(data)
-      queryClient.invalidateQueries({ queryKey: ["telegram_user"] })
     }
-  }, [TUserQuery.data?.id])
+    queryClient.invalidateQueries({ queryKey: ["telegram_user", "places"] })
+  }, [IdTelegramApp])
 
   const mutation = useMutation({
     mutationFn: (id: number) => PlaceService.delete(id),
@@ -40,10 +43,10 @@ export default function PlaceList({
 
   return (
     <>
-      <div className="px-4">
-        <ol className="relative border-s border-gray-200 dark:border-gray-700">
-          {TUserQuery.data?.id &&
-            dataPlaces?.map((place: Place) => (
+      {TUserQuery?.id ? (
+        <div className="px-4">
+          <ol className="relative border-s border-gray-200 dark:border-gray-700">
+            {dataPlaces?.map((place: Place) => (
               <li className="mb-6 ms-4 pt-2" key={place.id}>
                 <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
                 <div className="mb-2 flex justify-between text-l font-semibold text-gray-900 dark:text-white">
@@ -69,8 +72,18 @@ export default function PlaceList({
                 </div>
               </li>
             ))}
-        </ol>
-      </div>
+          </ol>
+        </div>
+      ) : (
+        <>
+          <img src={"./Share-expenses_add_place.png"} className="px-6 py-1" />
+
+          <p className="p-3 mt-1 text-sm text-gray-500 dark:text-gray-300">
+            {telegram_username} Разделите расходы в поездках и мероприятиях.
+            Добавьте место для начало работы.
+          </p>
+        </>
+      )}
     </>
   )
 }

@@ -13,7 +13,7 @@ from core.models import db_helper
 router = APIRouter(tags=["WebAppUsers"])
 
 
-@router.get("/", response_model=WebAppUser | list[WebAppUser])
+@router.get("/", response_model=list[WebAppUser])
 async def get_webAppUsers(
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),
     telegram_user_id: int | None = None,

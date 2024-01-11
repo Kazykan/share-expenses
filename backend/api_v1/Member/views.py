@@ -46,24 +46,7 @@ async def create_member(
     )
 
 
-# @router.get("/{place_id}/", response_model=list[Member])
-# async def get_member(
-#     place_id: int,
-#     session: AsyncSession = Depends(db_helper.session_dependency),
-# ):
-#     member = await crud.get_member_by_place_id(
-#         session=session, place_id=place_id
-#     )
-#     if member is not None:
-#         return member
-
-#     raise HTTPException(
-#         status_code=status.HTTP_404_NOT_FOUND,
-#         detail=f"Member {place_id} not found!",
-#     )
-
-
-@router.put("/{place_id}/")
+@router.put("/{member_id}/")
 async def update_member(
     member_update: MemberUpdate,
     member: Member = Depends(member_by_id),
@@ -74,7 +57,7 @@ async def update_member(
     )
 
 
-@router.patch("/{member_by_id}/")
+@router.patch("/{member_id}/")
 async def update_member_partial(
     member_update: MemberUpdatePartial,
     member: Member = Depends(member_by_id),
@@ -88,7 +71,7 @@ async def update_member_partial(
     )
 
 
-@router.delete("/{place_id}/", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{member_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_member(
     member: Member = Depends(member_by_id),
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),

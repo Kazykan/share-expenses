@@ -80,7 +80,7 @@ async def get_transfer(
     )
 
 
-@router.put("/{web_app_user_id}/")
+@router.put("/{transfer_id}/")
 async def update_transfer(
     transfer_update: MoneyTransferUpdate,
     transfer: MoneyTransfer = Depends(transfer_by_id),
@@ -91,7 +91,7 @@ async def update_transfer(
     )
 
 
-@router.patch("/{web_app_user_id}/")
+@router.patch("/{transfer_id}/")
 async def update_transfer_partial(
     transfer_update: MoneyTransferUpdatePartial,
     transfer: MoneyTransfer = Depends(transfer_by_id),
@@ -105,7 +105,7 @@ async def update_transfer_partial(
     )
 
 
-@router.delete("/{web_app_user_id}/", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{transfer_id}/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_transfer(
     transfer: MoneyTransfer = Depends(transfer_by_id),
     session: AsyncSession = Depends(db_helper.scoped_session_dependency),

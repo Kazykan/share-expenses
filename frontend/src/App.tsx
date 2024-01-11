@@ -2,27 +2,34 @@ import { Tab } from "@headlessui/react"
 import { useEffect, useMemo, useState } from "react"
 import { IWebApp } from "./telegram/t.types"
 import PlaceForm from "./components/forms/PlaceForm"
-import MoneyLogo from "./components/svg/money"
 import Navbars from "./components/screens/Navbars"
 import PlaceList from "./components/itemList/PlaceList"
+import { TUserService } from "./services/telegram.user.service"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [placeId, setPlaceId] = useState<number>(0)
-  const [isModalForm, setIsModalForm] = useState<boolean>(true)
+  const [isModalForm, setIsModalForm] = useState<boolean>(false)
   const [IdTelegramApp, setIdTelegramApp] = useState<number | undefined>(
-    172457394
+    undefined
   )
   const [webApp, setWebApp] = useState<IWebApp | null>(null)
 
   useEffect(() => {
+    const telegramAppUser = TUserService.get(undefined)
+    console.log(`telegramAppUser - ${telegramAppUser}`)
+    if (telegramAppUser == undefined) {
+      console.log(`if undefined telegramAppUser`)
+    }
+
+
+
     const telegram = (window as any).Telegram.WebApp
     if (telegram) {
       telegram.ready()
       setWebApp(telegram)
     }
-    setPlaceId(0) // Чтоб не было ошибок
   }, [])
 
   const tg = useMemo(() => {
@@ -76,12 +83,6 @@ export function App() {
         </Tab.Group>
       ) : (
         <>
-          <img src={"./Share-expenses_add_place.png"} className="px-6 py-1" />
-
-          <p className="p-3 mt-1 text-sm text-gray-500 dark:text-gray-300">
-            {tg.user?.username} Разделите расходы в поездках и мероприятиях.
-            Добавьте место для начало работы.
-          </p>
           {typeof tg.user?.id === "number" && (
             <PlaceList
               IdTelegramApp={IdTelegramApp}
