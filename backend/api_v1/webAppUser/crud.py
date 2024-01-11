@@ -21,7 +21,7 @@ async def get_webAppUser_by_tUser_id(
     stmt = select(WebAppUser).where(WebAppUser.telegram_user_id == telegram_user_id)
     result: Result = await session.execute(stmt)
     # webAppUser = result.scalar_one_or_none()
-    webAppUser = result.scalars.all()
+    webAppUser = result.scalars().all()
     return webAppUser
 
 
