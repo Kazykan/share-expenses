@@ -4,6 +4,7 @@ import { IWebApp } from "./telegram/t.types"
 import ModalForm from "./components/forms/ModalForm"
 import Navbars from "./components/screens/Navbars"
 import PlaceList from "./components/itemList/PlaceList"
+import MemberList from "./components/itemList/MemberList"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
@@ -76,7 +77,9 @@ export function App() {
           <Tab.Panels>
             <Tab.Panel>ExpenseList</Tab.Panel>
             <Tab.Panel>DeptAdviceList</Tab.Panel>
-            <Tab.Panel>UserList</Tab.Panel>
+            <Tab.Panel>
+              <MemberList placeId={placeId} />
+            </Tab.Panel>
             <Tab.Panel>MoneyTransferList</Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
