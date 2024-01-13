@@ -4,7 +4,7 @@ import { Member } from "../models/user.model"
 import { UserService } from "../../services/user.service"
 import { setIsModalFormProps } from "../models/props.model"
 
-const CreateUserForm = ({ placeId, setIsModalForm }: setIsModalFormProps) => {
+const CreateMemberForm = ({ placeId, setIsModalForm }: setIsModalFormProps) => {
   const queryClient = useQueryClient()
 
   const { register, handleSubmit, reset } = useForm({
@@ -48,4 +48,4 @@ const CreateUserForm = ({ placeId, setIsModalForm }: setIsModalFormProps) => {
   )
 }
 
-export default CreateUserForm
+export default CreateMemberForm

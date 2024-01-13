@@ -2,6 +2,9 @@ import { Dialog, Transition } from "@headlessui/react"
 import { Fragment } from "react"
 import CreatePlaceForm from "./CreatePlaceForm"
 import { setIsModalFormTUserIdProps } from "../models/props.model"
+import CreateMemberForm from "./CreateUserForm"
+import CreateExpenseForm from "./CreateExpenseForm"
+import CreateMoneyTransferForm from "./CreateMoneyTransferForm"
 
 export default function ModalForm({
   setIsModalForm,
@@ -48,13 +51,22 @@ export default function ModalForm({
                     Добавить место
                   </Dialog.Title> */}
                   {placeId && selectedIndex == 0 ? (
-                    <div>ExpenseForm</div>
+                    <CreateExpenseForm
+                      placeId={placeId}
+                      setIsModalForm={setIsModalForm}
+                    />
                   ) : undefined}
                   {placeId && selectedIndex == 2 ? (
-                    <div>member</div>
+                    <CreateMemberForm
+                      placeId={placeId}
+                      setIsModalForm={setIsModalForm}
+                    />
                   ) : undefined}
                   {placeId && selectedIndex == 3 ? (
-                    <div>MoneyTransferForm</div>
+                    <CreateMoneyTransferForm
+                      placeId={placeId}
+                      setIsModalForm={setIsModalForm}
+                    />
                   ) : undefined}
                   {placeId == 0 && (
                     <CreatePlaceForm

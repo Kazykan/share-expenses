@@ -5,7 +5,7 @@ import { PlaceIdProps } from "../interface"
 const useCountUsersQuery = (placeId: PlaceIdProps) => {
   return useQuery({
     queryFn: () => UserService.count(placeId),
-    queryKey: ["CountUsers"],
+    queryKey: ["CountUsers", placeId],
   })
 }
 

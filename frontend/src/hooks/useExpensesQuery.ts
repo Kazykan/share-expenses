@@ -4,7 +4,7 @@ import { ExpenseService } from "../services/expense.service"
 const useExpensesQuery = (placeId: number) => {
   return useQuery({
     queryFn: () => ExpenseService.getAll(placeId),
-    queryKey: ["expenses"],
+    queryKey: ["expenses", placeId],
   })
 }
 

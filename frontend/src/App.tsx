@@ -5,6 +5,9 @@ import ModalForm from "./components/forms/ModalForm"
 import Navbars from "./components/screens/Navbars"
 import PlaceList from "./components/itemList/PlaceList"
 import MemberList from "./components/itemList/MemberList"
+import ExpenseList from "./components/itemList/ExpenseList"
+import MoneyTransferList from "./components/itemList/MoneyTransferList"
+import DeptAdviceList from "./components/itemList/DeptAdviceList"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
@@ -75,12 +78,16 @@ export function App() {
             ))}
           </Tab.List>
           <Tab.Panels>
-            <Tab.Panel>ExpenseList</Tab.Panel>
-            <Tab.Panel>DeptAdviceList</Tab.Panel>
+            <Tab.Panel>
+              <ExpenseList placeId={placeId} />
+            </Tab.Panel>
+            <Tab.Panel><DeptAdviceList placeId={placeId} /></Tab.Panel>
             <Tab.Panel>
               <MemberList placeId={placeId} />
             </Tab.Panel>
-            <Tab.Panel>MoneyTransferList</Tab.Panel>
+            <Tab.Panel>
+              <MoneyTransferList placeId={placeId} />
+            </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
       ) : (
