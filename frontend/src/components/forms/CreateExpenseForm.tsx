@@ -1,11 +1,11 @@
 import { useForm, Controller } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { ExpenseService } from "../../services/expense.service"
 import { Expense } from "../models/expense.model"
 import ReactSelect from "react-select"
 import { IUserSelectProps, setIsModalFormProps } from "../models/props.model"
 import convertUserForSelectForm from "../../services/convertUserForSelectForm.service"
 import { useUsersQuery } from "../../hooks/useUsersQuery"
+import { ExpenseService } from "../../services/expense.service"
 
 const CreateExpenseForm = ({
   setIsModalForm,
@@ -33,7 +33,7 @@ const CreateExpenseForm = ({
     },
   })
 
-  const onSubmit = (data: any) => mutation.mutate({ ...data, place: placeId })
+  const onSubmit = (data: any) => mutation.mutate({ ...data, place_id: placeId })
 
   return (
     <>
@@ -65,7 +65,7 @@ const CreateExpenseForm = ({
           />
           <Controller
             control={control}
-            name="who_paid_user"
+            name="who_paid_member_id"
             rules={{
               required: "Обязательное поле",
             }}

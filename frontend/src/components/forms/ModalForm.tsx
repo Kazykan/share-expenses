@@ -47,11 +47,21 @@ export default function ModalForm({
                   >
                     Добавить место
                   </Dialog.Title> */}
-
-                  <CreatePlaceForm
-                    telegramUserId={telegramUserId}
-                    setIsModalForm={setIsModalForm}
-                  />
+                  {placeId && selectedIndex == 0 ? (
+                    <div>ExpenseForm</div>
+                  ) : undefined}
+                  {placeId && selectedIndex == 2 ? (
+                    <div>member</div>
+                  ) : undefined}
+                  {placeId && selectedIndex == 3 ? (
+                    <div>MoneyTransferForm</div>
+                  ) : undefined}
+                  {placeId == 0 && (
+                    <CreatePlaceForm
+                      telegramUserId={telegramUserId}
+                      setIsModalForm={setIsModalForm}
+                    />
+                  )}
 
                   <div className="mt-4">
                     <button

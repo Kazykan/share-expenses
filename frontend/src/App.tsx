@@ -1,7 +1,7 @@
 import { Tab } from "@headlessui/react"
 import { useEffect, useMemo, useState } from "react"
 import { IWebApp } from "./telegram/t.types"
-import ModalForm from "./components/forms/PlaceForm"
+import ModalForm from "./components/forms/ModalForm"
 import Navbars from "./components/screens/Navbars"
 import PlaceList from "./components/itemList/PlaceList"
 
@@ -49,13 +49,15 @@ export function App() {
 
       <Navbars setIsModalForm={setIsModalForm} />
 
-      {isModalForm && (
+      {isModalForm && selectedIndex != 1 ? (
         <ModalForm
           setIsModalForm={setIsModalForm}
           telegramUserId={IdTelegramApp}
           placeId={placeId}
           selectedIndex={selectedIndex}
         />
+      ) : (
+        ""
       )}
 
       {/* Если нет placeId и определился tg.id */}
