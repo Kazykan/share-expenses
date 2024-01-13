@@ -6,6 +6,8 @@ export interface setIsModalFormProps {
 export interface setIsModalFormTUserIdProps {
   setIsModalForm: React.Dispatch<React.SetStateAction<boolean>>
   telegramUserId: number | undefined
+  placeId?: number
+  selectedIndex?: number
 }
 
 export interface IUserSelectProps {

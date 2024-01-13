@@ -1,6 +1,6 @@
-export interface User {
+export interface Member {
   id?: number
   username: string
   id_telegram: string | null
-  place: number
+  place_id: number
 }

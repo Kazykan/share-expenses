@@ -3,7 +3,7 @@ import { TUserService } from "../services/telegram.user.service";
 
 export function useTUser(IdTelegramApp: number | undefined) {
     return useQuery({
-        queryKey: ["telegram_user", IdTelegramApp],
+        queryKey: ["telegram", IdTelegramApp],
         queryFn: async () => TUserService.get(IdTelegramApp),
     })
 }

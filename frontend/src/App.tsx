@@ -1,13 +1,13 @@
 import { Tab } from "@headlessui/react"
 import { useEffect, useMemo, useState } from "react"
 import { IWebApp } from "./telegram/t.types"
-import PlaceForm from "./components/forms/PlaceForm"
+import ModalForm from "./components/forms/PlaceForm"
 import Navbars from "./components/screens/Navbars"
 import PlaceList from "./components/itemList/PlaceList"
 
 export function App() {
   const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState<number>(0)
   const [placeId, setPlaceId] = useState<number>(0)
   const [isModalForm, setIsModalForm] = useState<boolean>(false)
   const [IdTelegramApp, setIdTelegramApp] = useState<number | undefined>(
@@ -15,6 +15,9 @@ export function App() {
   )
   const [webApp, setWebApp] = useState<IWebApp | null>(null)
 
+  useEffect(() => {
+    console.log(`state is `, IdTelegramApp)
+  }, [IdTelegramApp])
 
   useEffect(() => {
     const telegram = (window as any).Telegram.WebApp
@@ -47,9 +50,11 @@ export function App() {
       <Navbars setIsModalForm={setIsModalForm} />
 
       {isModalForm && (
-        <PlaceForm
+        <ModalForm
           setIsModalForm={setIsModalForm}
           telegramUserId={IdTelegramApp}
+          placeId={placeId}
+          selectedIndex={selectedIndex}
         />
       )}
 
@@ -77,7 +82,7 @@ export function App() {
         <>
           {typeof tg.user?.id === "number" && (
             <PlaceList
-              IdTelegramApp={IdTelegramApp}
+              IdTelegramApp={tg.user?.id}
               setPlaceId={setPlaceId}
               telegram_username={tg.user?.username}
             />

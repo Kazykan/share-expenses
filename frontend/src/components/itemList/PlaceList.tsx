@@ -2,12 +2,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { PlaceListProps } from "../../interface"
 import { Place } from "../models/place.model"
 import { PlaceService } from "../../services/place.service"
-// import { useOneTelegramUserQuery } from "../../hooks/useOneTelegramUserQuery"
-// import CreateTelegramUserForm from "../forms/CreateTelegramUserForm"
 import { useTUser } from "../../hooks/t.user.queries"
-import { TUserService } from "../../services/telegram.user.service"
-import { TelegramUser } from "../models/telegramuser.model"
 import { usePlacesQuery } from "../../hooks/places.query"
+import { WebAppUser } from "../models/telegramuser.model"
+import { TUserService } from "../../services/telegram.user.service"
+
+function delay(timeout: number) {
+  return new Promise((r) => setTimeout(r, timeout))
+}
 
 export default function PlaceList({
   IdTelegramApp,
@@ -18,25 +20,15 @@ export default function PlaceList({
   const { data: TUserQuery } = useTUser(IdTelegramApp)
   const { data: dataPlaces } = usePlacesQuery(IdTelegramApp)
 
-  // const mutationTelegram = useMutation({
-  //   mutationFn: (data: TelegramUser) => TUserService.create(data),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["telegram_user", "places"] })
-  //   },
-  // })
-
-  // useEffect(() => {
-  //   // Если пользователя нет создаем его в БД
-  //   const telegramAppUser = TUserService.get(IdTelegramApp)
-  //   if (telegramAppUser === undefined && IdTelegramApp !== undefined) {
-  //     const data: TelegramUser = {
-  //       telegram_user_id: IdTelegramApp ?? 0,
-  //       username: telegram_username ?? "",
-  //     }
-  //     TUserService.create(data)
-  //   }
-  //   queryClient.invalidateQueries({ queryKey: ["telegram_user", "places"] })
-  // }, [IdTelegramApp])
+  const handleCreateTelegramUser = () => {
+    mutationTelegram.mutate({
+      telegram_user_id: IdTelegramApp!,
+      username: telegram_username ?? "",
+    })
+    // Делаем задержку и полностью перезапускаем страницу, т.к. я не нашел другого способа т.к. IdTelegramApp не обновляется
+    delay(10000)
+    window.location.reload()
+  }
 
   const mutation = useMutation({
     mutationFn: (id: number) => PlaceService.delete(id),
@@ -45,9 +37,24 @@ export default function PlaceList({
     },
   })
 
+  const mutationTelegram = useMutation({
+    mutationFn: (data: WebAppUser) => TUserService.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["telegram", "places"] })
+      console.log("delay_befor")
+      delay(50000)
+      console.log("delay_after")
+    },
+    onError: () => {
+      delay(50000)
+      console.log("delay_5000")
+    },
+  })
+
   return (
     <>
-      {TUserQuery && IdTelegramApp ? (
+      {/* Если Id не определен, а если определен то смотрим есть ли такой пользователь в БД, если нет запускаем его создание */}
+      {TUserQuery?.length !== 0 && IdTelegramApp !== undefined ? (
         <div className="px-4">
           <ol className="relative border-s border-gray-200 dark:border-gray-700">
             {dataPlaces ? (
@@ -92,17 +99,13 @@ export default function PlaceList({
             )}
           </ol>
         </div>
-      ) : 
-      (
+      ) : (
         <>
-        {IdTelegramApp}{TUserQuery?.length}
-        {/* {mutationTelegram.mutate({
-          telegram_user_id: IdTelegramApp ?? 0,
-          username: telegram_username ?? "",
-        })} */}
+          {IdTelegramApp} {TUserQuery?.length}
+          {TUserQuery?.length && <div>length == 0</div>}
+          {handleCreateTelegramUser()}
         </>
-      )
-      }
+      )}
     </>
   )
 }

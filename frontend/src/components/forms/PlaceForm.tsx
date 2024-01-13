@@ -3,9 +3,11 @@ import { Fragment } from "react"
 import CreatePlaceForm from "./CreatePlaceForm"
 import { setIsModalFormTUserIdProps } from "../models/props.model"
 
-export default function PlaceForm({
+export default function ModalForm({
   setIsModalForm,
   telegramUserId,
+  placeId,
+  selectedIndex,
 }: setIsModalFormTUserIdProps) {
   return (
     <>
@@ -39,13 +41,17 @@ export default function PlaceForm({
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
+                  {/* <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Добавить место {telegramUserId}
-                  </Dialog.Title>
-                  <CreatePlaceForm telegramUserId={telegramUserId} setIsModalForm={setIsModalForm}/>
+                    Добавить место
+                  </Dialog.Title> */}
+
+                  <CreatePlaceForm
+                    telegramUserId={telegramUserId}
+                    setIsModalForm={setIsModalForm}
+                  />
 
                   <div className="mt-4">
                     <button

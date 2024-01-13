@@ -27,22 +27,27 @@ const CreatePlaceForm = ({
     mutation.mutate({ ...data, web_app_user_id: telegramUserId })
 
   return (
-    <form className="py-2 px-" onSubmit={handleSubmit((e) => onSubmit(e))}>
-      <div className="mb-4">
-        <input
-          {...register("name", { required: true })}
-          className="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="name"
-          type="text"
-          placeholder="Название поездки или события"
-        />
+    <>
+      <div className="text-lg font-medium leading-6 text-gray-900">
+        Добавить место
       </div>
-      <div className="flex items-center justify-center mb-4">
-        <button className="bg-gray-900 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline">
-          Ok
-        </button>
-      </div>
-    </form>
+      <form className="py-2 px-" onSubmit={handleSubmit((e) => onSubmit(e))}>
+        <div className="mb-4">
+          <input
+            {...register("name", { required: true })}
+            className="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Название поездки или события"
+          />
+        </div>
+        <div className="flex items-center justify-center mb-4">
+          <button className="bg-gray-900 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline">
+            Ok
+          </button>
+        </div>
+      </form>
+    </>
   )
 }
 
