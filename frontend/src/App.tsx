@@ -81,7 +81,9 @@ export function App() {
             <Tab.Panel>
               <ExpenseList placeId={placeId} />
             </Tab.Panel>
-            <Tab.Panel><DeptAdviceList placeId={placeId} /></Tab.Panel>
+            <Tab.Panel>
+              <DeptAdviceList placeId={placeId} />
+            </Tab.Panel>
             <Tab.Panel>
               <MemberList placeId={placeId} />
             </Tab.Panel>
@@ -99,8 +101,16 @@ export function App() {
               telegram_username={tg.user?.username}
             />
           )}
+
+          {/* Расcкоменторовать добавить для тестов свой id */}
+          {/* <PlaceList
+              IdTelegramApp={172457394}
+              setPlaceId={setPlaceId}
+              telegram_username={tg.user?.username}
+            /> */}
         </>
       )}
+      {/* <DatePickerExample /> */}
     </>
   )
 }
