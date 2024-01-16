@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Member } from "../models/user.model"
-import { UserService } from "../../services/user.service"
+import { MemberService } from "../../services/user.service"
 import { setIsModalFormProps } from "../models/props.model"
 
 const CreateMemberForm = ({ placeId, setIsModalForm }: setIsModalFormProps) => {
@@ -12,7 +12,7 @@ const CreateMemberForm = ({ placeId, setIsModalForm }: setIsModalFormProps) => {
   })
 
   const mutation = useMutation({
-    mutationFn: (data: Member) => UserService.create(data),
+    mutationFn: (data: Member) => MemberService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["members"] })
       reset()
