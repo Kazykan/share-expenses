@@ -7,7 +7,7 @@ import { useMoneyTransfersQuery } from "../../hooks/useMoneyTransfersQuery"
 import { useUsersQuery } from "../../hooks/useUsersQuery"
 
 function MoneyTransferList({ placeId }: PlaceIdProps) {
-  const {data: dataMoneyTransfer} = useMoneyTransfersQuery(placeId)
+  const { data: dataMoneyTransfer } = useMoneyTransfersQuery(placeId)
   const { data: dataUsers } = useUsersQuery(placeId)
   const queryClient = useQueryClient()
 
@@ -15,7 +15,6 @@ function MoneyTransferList({ placeId }: PlaceIdProps) {
     mutationFn: (id: number) => MoneyTransferService.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["moneyTransfers"] })
-      
     },
   })
 
@@ -31,11 +30,14 @@ function MoneyTransferList({ placeId }: PlaceIdProps) {
                   {moneyTransfer.date}
                 </time>
                 <div className="mb-2 flex justify-between text-l font-semibold text-gray-900 dark:text-white">
-                  <div>{
+                  <div>
+                    {
                       dataUsers?.find(
                         (user) => user.id === moneyTransfer.who_paid_member_id
                       )?.username
-                    } {" =>"} </div>
+                    }{" "}
+                    {" =>"}{" "}
+                  </div>
                   <div>{currencyFormatMoney(moneyTransfer.amount)}</div>
                 </div>
                 <div className="flex justify-between mb-2 text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -48,14 +50,15 @@ function MoneyTransferList({ placeId }: PlaceIdProps) {
                     }
                   </div>
                   <div>
-                    {moneyTransfer.id && <a
-                      href="#"
-                      className="inline-block px-2 py-0.5 text-sm font-sm rounded-md bg-blue-200 dark:bg-violet-400 dark:text-gray-900"
-                      onClick={() => mutation.mutate(moneyTransfer.id!)}
-                    >
-                      Удалить
-                    </a>}
-                   {" "}
+                    {moneyTransfer.id && (
+                      <a
+                        href="#"
+                        className="inline-block px-2 py-0.5 text-sm font-sm rounded-md bg-blue-200 dark:bg-violet-400 dark:text-gray-900"
+                        onClick={() => mutation.mutate(moneyTransfer.id!)}
+                      >
+                        Удалить
+                      </a>
+                    )}{" "}
                     Ред.
                   </div>
                 </div>
