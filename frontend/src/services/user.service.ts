@@ -2,7 +2,7 @@ import { PlaceIdProps } from "../interface"
 import { axiosInstance } from "./api"
 import { Member } from "../components/models/user.model"
 
-export const UserService = {
+export const MemberService = {
   async getAll(placeId: number) {
     const response = await axiosInstance.get<Member[]>(
       `members/?place_id=${placeId}`
@@ -20,11 +20,9 @@ export const UserService = {
   },
 
   async count(placeId: PlaceIdProps) {
-    const response = await axiosInstance.get(
-      `members/?place_id=${placeId}`
-    )
-      if (response.data.length == undefined) {
-        return 0
-      } else return response.data.length
+    const response = await axiosInstance.get(`members/?place_id=${placeId}`)
+    if (response.data.length == undefined) {
+      return 0
+    } else return response.data.length
   },
 }
