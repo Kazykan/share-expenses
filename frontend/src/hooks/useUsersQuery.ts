@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
-import { UserService } from "../services/user.service"
+import { MemberService } from "../services/user.service"
 
 const useUsersQuery = (placeId: number) => {
   return useQuery({
-    queryFn: () => UserService.getAll(placeId),
+    queryFn: () => MemberService.getAll(placeId),
     queryKey: ["members", placeId],
   })
 }
