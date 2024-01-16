@@ -43,7 +43,7 @@ function DeptAdviceList({ placeId }: PlaceIdProps) {
       plusSum = 0
     }
     var minusSum = dataMoneyTransfer
-      ?.filter((transfer) => transfer.who_got_member_id== userId)
+      ?.filter((transfer) => transfer.who_got_member_id == userId)
       .reduce((total, transfer) => total + transfer.amount, 0)
     if (minusSum == undefined) {
       minusSum = 0
@@ -79,68 +79,70 @@ function DeptAdviceList({ placeId }: PlaceIdProps) {
     uTab.sort((a, b) => (a.balance < b.balance ? 1 : -1))
 
     while (uTab.length !== 0) {
-    // Сортировка В начале кому должны, потом кто должен
-    uTab.sort((a, b) => (a.balance < b.balance ? 1 : -1))
-    // Удаляем из уравнения элементы с 0 суммой
-    for (let i = 0; i < uTab.length; i++) {
-      if (uTab[i].balance == 0) {
-        uTab.splice(i, 1)
+      // Сортировка В начале кому должны, потом кто должен
+      uTab.sort((a, b) => (a.balance < b.balance ? 1 : -1))
+      // Удаляем из уравнения элементы с 0 суммой
+      for (let i = 0; i < uTab.length; i++) {
+        if (uTab[i].balance == 0) {
+          uTab.splice(i, 1)
+        }
       }
-    }
-    // Если длина равно 0 выходим из цикла
-    if (uTab.length == 0) {
-      break
-    }
-
-    // Кому должны больше всего (+) сумма, берем 1-го и кто должен больше всего (-) берем сумму последнего
-    // Если сумма (-) должен меньше (+) суммы считаем, если нет то запускаем другой if
-    // Например Антон должен -500р. а Мише должны 400р. если сложит 400 - 500 = -100р. тогда запускаем другой if он ниже
-    // firstMinusEnd > -1 (Вот это сравнение ниже)
-    const firstMinusEnd = uTab[0].balance + uTab[uTab.length - 1].balance
-    if (
-      uTab[0].balance > 0 &&
-      uTab[uTab.length - 1].balance < 0 &&
-      firstMinusEnd > -1
-    ) {
-      // создаем запись для предложения о переводе
-      const temp = {
-        amount: Math.trunc( (uTab[uTab.length - 1].balance * -1) * 100 ) / 100,
-        date: null,
-        who_paid_member_id: uTab[uTab.length - 1].id,
-        who_got_member_id: uTab[0].id,
-        place_id: placeId,
+      // Если длина равно 0 выходим из цикла
+      if (uTab.length == 0) {
+        break
       }
-      // обновляем значения в таблице кто должен прибавляем потому что у него сумма отрицательная
-      uTab[0].balance =
-        Math.trunc((uTab[0].balance + uTab[uTab.length - 1].balance) * 100) /
-        100
-      // обновляем баланс последнего на 0,
-      // т.к. он переводит первому всю сумму долга, если это не так, то срабатывает второй if он ниже
-      uTab[uTab.length - 1].balance = 0
 
-      tNewTransfer.push(temp)
-    } else if (uTab[0].balance > 0) {
-      const balanceOwed = uTab[0].balance + uTab[uTab.length - 1].balance
-      const temp = {
-        amount:
-          Math.trunc((uTab[uTab.length - 1].balance - balanceOwed) * -1 * 100) /
-          100,
-        date: null,
-        who_paid_member_id: uTab[uTab.length - 1].id,
-        who_got_member_id: uTab[0].id,
-        place_id: placeId,
+      // Кому должны больше всего (+) сумма, берем 1-го и кто должен больше всего (-) берем сумму последнего
+      // Если сумма (-) должен меньше (+) суммы считаем, если нет то запускаем другой if
+      // Например Антон должен -500р. а Мише должны 400р. если сложит 400 - 500 = -100р. тогда запускаем другой if он ниже
+      // firstMinusEnd > -1 (Вот это сравнение ниже)
+      const firstMinusEnd = uTab[0].balance + uTab[uTab.length - 1].balance
+      if (
+        uTab[0].balance > 0 &&
+        uTab[uTab.length - 1].balance < 0 &&
+        firstMinusEnd > -1
+      ) {
+        // создаем запись для предложения о переводе
+        const temp = {
+          amount: Math.trunc(uTab[uTab.length - 1].balance * -1 * 100) / 100,
+          date: null,
+          who_paid_member_id: uTab[uTab.length - 1].id,
+          who_got_member_id: uTab[0].id,
+          place_id: placeId,
+        }
+        // обновляем значения в таблице кто должен прибавляем потому что у него сумма отрицательная
+        uTab[0].balance =
+          Math.trunc((uTab[0].balance + uTab[uTab.length - 1].balance) * 100) /
+          100
+        // обновляем баланс последнего на 0,
+        // т.к. он переводит первому всю сумму долга, если это не так, то срабатывает второй if он ниже
+        uTab[uTab.length - 1].balance = 0
+
+        tNewTransfer.push(temp)
+      } else if (uTab[0].balance > 0) {
+        const balanceOwed = uTab[0].balance + uTab[uTab.length - 1].balance
+        const temp = {
+          amount:
+            Math.trunc(
+              (uTab[uTab.length - 1].balance - balanceOwed) * -1 * 100
+            ) / 100,
+          date: null,
+          who_paid_member_id: uTab[uTab.length - 1].id,
+          who_got_member_id: uTab[0].id,
+          place_id: placeId,
+        }
+        // Math.trunc( x * 100 ) / 100 обрезает цифры после запятой x = 10.8976456874 -> 10.89
+
+        uTab[0].balance =
+          Math.trunc(
+            (uTab[0].balance + uTab[uTab.length - 1].balance - balanceOwed) *
+              100
+          ) / 100
+
+        uTab[uTab.length - 1].balance = Math.trunc(balanceOwed * 100) / 100
+
+        tNewTransfer.push(temp) // добавляем объект в массив
       }
-      // Math.trunc( x * 100 ) / 100 обрезает цифры после запятой x = 10.8976456874 -> 10.89
-
-      uTab[0].balance =
-        Math.trunc(
-          (uTab[0].balance + uTab[uTab.length - 1].balance - balanceOwed) * 100
-        ) / 100
-
-      uTab[uTab.length - 1].balance = Math.trunc( balanceOwed * 100 ) / 100 
-
-      tNewTransfer.push(temp) // добавляем объект в массив
-    }
     }
     return tNewTransfer // отдаем его
   }
