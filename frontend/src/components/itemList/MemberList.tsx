@@ -9,11 +9,7 @@ import { useUsersQuery } from "../../hooks/useUsersQuery"
 function MemberList({ placeId }: PlaceIdProps) {
   const placeIdNumber = Number(placeId)
 
-  const {
-    data: dataUsers,
-    isLoading,
-    isSuccess,
-  } = useUsersQuery(placeIdNumber)
+  const { data: dataUsers, isLoading, isSuccess } = useUsersQuery(placeIdNumber)
   const { data: dataMoneyTransfer } = useMoneyTransfersQuery(placeId)
   const { data: dataExpense } = useExpensesQuery(placeId)
 
@@ -68,43 +64,44 @@ function MemberList({ placeId }: PlaceIdProps) {
   if (isLoading) return <div>Loading...</div>
 
   return (
-    <div className="px-4">
+    <div className="px-2">
       {/* <ol className="relative border-s border-gray-200 dark:border-gray-700"> */}
       {isSuccess && (
         <div className="py-3">
-          <div className="mx-auto max-w-sm space-y-4 rounded-lg p-4">
+          <div className="mx-auto max-w-sm space-y-4 rounded-lg p-1">
             {dataUsers.map((member: Member) => (
               <div
-                className="flex justify-between rounded-lg dark:bg-[#3D3A37] bg-white px-4 py-4 text-[#32371C] dark:text-[#D5D0CA] shadow"
+                className="px-3 py-3 rounded dark:bg-[#3D3A37] bg-white text-[#32371C] dark:text-[#D5D0CA] shadow"
                 key={member.id}
               >
-                <div>
-                  <p>{member.username}</p>
-                  <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
-                    Потратил(a) всего:{" "}
-                    {currencyFormatMoney(userExpensesSum(member.id!))}
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
-                    Баланс:
-                    {BalanceUser(member.id!) >= 0 ? (
-                      <div className="text-lime-600">
-                        {currencyFormatMoney(BalanceUser(member.id!))}
-                      </div>
-                    ) : (
-                      <div className="text-orange-600">
-                        {currencyFormatMoney(BalanceUser(member.id!))}
-                      </div>
-                    )}
-                  </p>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p>{member.username}</p>
+                  </div>
+                  <div>
+                    <button className="rounded p-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                      <CiEdit />
+                    </button>
+                    <button className="rounded p-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                      <CiTrash />
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <button className="rounded p-2 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
-                    <CiEdit />
-                  </button>
-                  <button className="rounded p-2 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
-                    <CiTrash />
-                  </button>
-                </div>
+                <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
+                  Потратил(a) всего:{" "}
+                  {currencyFormatMoney(userExpensesSum(member.id!))}
+                </p>
+                <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
+                  Баланс: {BalanceUser(member.id!) >= 0 ? (
+                    <span className="text-lime-600">
+                      {currencyFormatMoney(BalanceUser(member.id!))}
+                    </span>
+                  ) : (
+                    <span className="text-orange-600">
+                      {currencyFormatMoney(BalanceUser(member.id!))}
+                    </span>
+                  )}
+                </p>
               </div>
             ))}
           </div>

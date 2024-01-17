@@ -5,6 +5,7 @@ import { Expense } from "../models/expense.model"
 import { PlaceIdProps } from "../../interface"
 import { useExpensesQuery } from "../../hooks/useExpensesQuery"
 import { useUsersQuery } from "../../hooks/useUsersQuery"
+import { CiEdit, CiTrash } from "react-icons/ci"
 
 function ExpenseList({ placeId }: PlaceIdProps) {
   const { data: dataExpense } = useExpensesQuery(placeId)
@@ -21,7 +22,56 @@ function ExpenseList({ placeId }: PlaceIdProps) {
 
   return (
     <>
-      <div className="px-4">
+      <div className="px-2">
+        <div className="py-3">
+          <div className="mx-auto max-w-sm space-y-4 rounded-lg p-1">
+            {dataExpense ? (
+              dataExpense.map((expense: Expense) => (
+                <div
+                  className="px-3 py-3 rounded dark:bg-[#3D3A37] bg-white text-[#32371C] dark:text-[#D5D0CA] shadow"
+                  key={expense.id}
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-xs text-gray-500 dark:text-[#A7A29D]">
+                        {expense.date}
+                      </p>
+                    </div>
+                    <div>
+                      <button className="rounded px-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                        <CiEdit />
+                      </button>
+                      <button
+                        className="rounded px-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]"
+                        onClick={() => mutation.mutate(expense.id!)}
+                      >
+                        <CiTrash />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex justify-between pb-1">
+                    <div>{expense.name}</div>
+                    <div>{currencyFormatMoney(expense.cost)}</div>
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-[#A7A29D]">
+                    Оплатил(a):{" "}
+                    {
+                      dataUsers?.find(
+                        (user) => user.id === expense.who_paid_member_id
+                      )?.username
+                    }
+                  </div>
+                </div>
+              ))
+            ) : (
+              <h2 className="text-lg font-medium text-gray-800 dark:text-white">
+                Поездок нет
+              </h2>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* <div className="px-4">
         <ol className="relative border-s border-gray-200 dark:border-gray-700">
           {dataExpense ? (
             dataExpense.map((expense: Expense) => (
@@ -64,7 +114,7 @@ function ExpenseList({ placeId }: PlaceIdProps) {
             </h2>
           )}
         </ol>
-      </div>
+      </div> */}
     </>
   )
 }

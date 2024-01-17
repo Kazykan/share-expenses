@@ -5,6 +5,7 @@ import { MoneyTransferService } from "../../services/moneyTransfer.service"
 import { MoneyTransfer } from "../models/moneyTransfer.model"
 import { useMoneyTransfersQuery } from "../../hooks/useMoneyTransfersQuery"
 import { useUsersQuery } from "../../hooks/useUsersQuery"
+import { PiArrowElbowRightDownFill } from "react-icons/pi"
 
 function MoneyTransferList({ placeId }: PlaceIdProps) {
   const { data: dataMoneyTransfer } = useMoneyTransfersQuery(placeId)
@@ -30,13 +31,13 @@ function MoneyTransferList({ placeId }: PlaceIdProps) {
                   {moneyTransfer.date}
                 </time>
                 <div className="mb-2 flex justify-between text-l font-semibold text-gray-900 dark:text-white">
-                  <div>
+                  <div className="flex items-center">
                     {
                       dataUsers?.find(
                         (user) => user.id === moneyTransfer.who_paid_member_id
                       )?.username
-                    }{" "}
-                    {" =>"}{" "}
+                    }&ensp;
+                    <PiArrowElbowRightDownFill />{" "}
                   </div>
                   <div>{currencyFormatMoney(moneyTransfer.amount)}</div>
                 </div>
