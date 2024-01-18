@@ -1,9 +1,8 @@
+const plugin = require("tailwindcss/plugin")
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
@@ -11,5 +10,8 @@ export default {
     // require('@headlessui/tailwindcss')
 
     // Or with a custom prefix:
-    require('@headlessui/tailwindcss')({ prefix: 'ui' })],
+    require("@headlessui/tailwindcss")({ prefix: "ui" }),
+    require("tailwindcss-react-aria-components"),
+    require("tailwindcss-animate"),
+  ],
 }
