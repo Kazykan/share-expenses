@@ -68,7 +68,7 @@ function MemberList({ placeId }: PlaceIdProps) {
       {/* <ol className="relative border-s border-gray-200 dark:border-gray-700"> */}
       {isSuccess && (
         <div className="py-3">
-          <div className="mx-auto max-w-sm space-y-4 rounded-lg p-1">
+          <div className="mx-auto max-w-sm space-y-4 rounded p-0">
             {dataUsers.map((member: Member) => (
               <div
                 className="px-3 py-3 rounded dark:bg-[#3D3A37] bg-white text-[#32371C] dark:text-[#D5D0CA] shadow"
@@ -78,11 +78,11 @@ function MemberList({ placeId }: PlaceIdProps) {
                   <div>
                     <p>{member.username}</p>
                   </div>
-                  <div>
-                    <button className="rounded p-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                  <div className="text-lg space-x-5">
+                    <button className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
                       <CiEdit />
                     </button>
-                    <button className="rounded p-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                    <button className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
                       <CiTrash />
                     </button>
                   </div>

@@ -56,34 +56,42 @@ export default function PlaceList({
     <>
       {/* Если Id не определен, а если определен то смотрим есть ли такой пользователь в БД, если нет запускаем его создание */}
       {TUserQuery?.length !== 0 && IdTelegramApp !== undefined ? (
-        <div>
+        <div className="px-2">
           {/* <ol className="relative border-s border-gray-200 dark:border-gray-700"> */}
           {dataPlaces ? (
             <div className="py-3">
               <div className="mx-auto max-w-sm space-y-4 rounded-lg p-4">
                 {dataPlaces.map((place: Place) => (
                   <div
-                    className="flex justify-between rounded-lg dark:bg-[#3D3A37] bg-white px-4 py-4 text-[#32371C] dark:text-[#D5D0CA] shadow"
+                    className="px-3 py-3 rounded dark:bg-[#3D3A37] bg-white text-[#32371C] dark:text-[#D5D0CA] shadow"
                     key={place.id}
                   >
+                    <div className="flex justify-between">
+                      <div>
+                        <a
+                          href="#"
+                          onClick={() => setPlaceId(place.id!)}
+                          className="hover:text-[#B2EDEE] dark:hover:text-[#8EBCBD]"
+                        >
+                          {place.name}
+                        </a>
+                      </div>
+                      <div className="text-lg space-x-5">
+                        <button className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                          <CiEdit />
+                        </button>
+                        <button
+                          className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]"
+                          onClick={() => mutation.mutate(place.id!)}
+                        >
+                          <CiTrash />
+                        </button>
+                      </div>
+                    </div>
                     <div>
-                      <a href="#" onClick={() => setPlaceId(place.id!)} className="hover:text-[#B2EDEE] dark:hover:text-[#8EBCBD]">
-                        {place.name}
-                      </a>
                       <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
                         3 участника, общий баланс: 13 000 $
                       </p>
-                    </div>
-                    <div>
-                      <button className="rounded p-2 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
-                        <CiEdit />
-                      </button>
-                      <button
-                        className="rounded p-2 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]"
-                        onClick={() => mutation.mutate(place.id!)}
-                      >
-                        <CiTrash />
-                      </button>
                     </div>
                   </div>
                 ))}

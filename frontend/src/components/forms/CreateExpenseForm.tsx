@@ -7,7 +7,7 @@ import { useUsersQuery } from "../../hooks/useUsersQuery"
 import { ExpenseService } from "../../services/expense.service"
 import { IoCloseSharp } from "react-icons/io5"
 import { ListBoxItem } from "react-aria-components"
-import { MySelect } from "../screens/select"
+import { Select } from "../screens/select"
 import { useState } from "react"
 import { Dialog } from "@headlessui/react"
 // import {Button, Label, ListBox, ListBoxItem, Popover, Select, SelectValue} from 'react-aria-components';
@@ -84,8 +84,30 @@ const CreateExpenseForm = ({
             id="date"
             type="date"
           />
+
+          {/* <div className="sm:col-span-3">
+            <label
+              htmlFor="country"
+              className="block font-medium leading-6"
+            >
+              Country
+            </label>
+            <div className="mt-2">
+              <select
+                id="country"
+                name="country"
+                autoComplete="country-name"
+                className="block w-full rounded border-0 py-2 shadow ring-0 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-[#262019]"
+              >
+                <option>United States</option>
+                <option>Canada</option>
+                <option>Mexico</option>
+              </select>
+            </div>
+          </div> */}
+
           <label className="mb-1">Кто оплатил</label>
-          <MySelect
+          <Select
             description=""
             // isOpen={true}
             items={testData}
@@ -93,7 +115,7 @@ const CreateExpenseForm = ({
             onSelectionChange={(selected) => setWhoPaidMemberId(selected)}
           >
             {(item) => <ListBoxItem id={item.value}>{item.label}</ListBoxItem>}
-          </MySelect>
+          </Select>
 
           {/* <Controller
             control={control}

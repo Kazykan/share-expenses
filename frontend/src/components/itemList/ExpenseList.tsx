@@ -37,12 +37,12 @@ function ExpenseList({ placeId }: PlaceIdProps) {
                         {expense.date}
                       </p>
                     </div>
-                    <div>
-                      <button className="rounded px-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                    <div className="text-lg space-x-5">
+                      <button className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
                         <CiEdit />
                       </button>
                       <button
-                        className="rounded px-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]"
+                        className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]"
                         onClick={() => mutation.mutate(expense.id!)}
                       >
                         <CiTrash />
