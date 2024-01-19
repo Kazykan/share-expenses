@@ -72,7 +72,7 @@ function MoneyTransferList({ placeId }: PlaceIdProps) {
               ))
             ) : (
               <h2 className="text-lg font-medium text-gray-800 dark:text-white">
-                Поездок нет
+                Транзакций нет
               </h2>
             )}
           </div>

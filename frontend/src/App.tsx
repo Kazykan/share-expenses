@@ -23,9 +23,6 @@ export function App() {
   )
   const [webApp, setWebApp] = useState<IWebApp | null>(null)
 
-  useEffect(() => {
-    console.log(`state is `, IdTelegramApp)
-  }, [IdTelegramApp])
 
   useEffect(() => {
     const telegram = (window as any).Telegram.WebApp
@@ -55,7 +52,7 @@ export function App() {
       {/* Окно в telegram на весь экран */}
       {tg && tg.tg?.expand()}
 
-      <Navbars setIsModalForm={setIsModalForm} />
+      <Navbars />
 
       {isModalForm && selectedIndex != 1 ? (
         <ModalForm
@@ -71,62 +68,62 @@ export function App() {
       {/* Если нет placeId и определился tg.id */}
       {placeId ? (
         <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-          <Tab.List className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-            <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
+          <Tab.List className="fixed bottom-0 left-0 z-50 w-full h-14 bg-white border-t border-gray-200 dark:bg-[#3D3A37] dark:border-[#A7A29D]">
+            <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium text-xs text-gray-500 dark:text-[#262019]">
+              {/* <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium text-xs text-gray-500 dark:text-[#262019] group-hover:text-blue-600 dark:group-hover:text-[#8EBCBD]"> */}
               <Tab
                 key="0"
-                className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                className="hover:transition-all duration-300 inline-block p-1 rounded ui-not-selected:hover:text-[#111827] ui-not-selected:dark:hover:text-[#A7A29D] ui-selected:text-[#111827] ui-selected:active ui-selected:dark:text-[#A7A29D]"
+                // className="ui-selected:transition-all inline-block p-4 border-b-2 ui-not-selected:border-transparent rounded ui-not-selected:hover:text-gray-600 ui-not-selected:hover:border-gray-300 ui-not-selected:dark:hover:text-gray-300 ui-selected:text-blue-600 ui-selected:border-blue-600 ui-selected:active ui-selected:dark:text-[#A7A29D] ui-selected:dark:border-blue-500"
+
+                // className="inline-flex flex-col items-center justify-center px-2  group"
               >
                 <button
                   type="button"
-                  className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                  className="inline-flex flex-col items-center justify-center px-2 group"
                 >
-                  <BsCashCoin className="text-xl text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-                  <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                    Расходы
-                  </span>
+                  <BsCashCoin className="text-xl" />
+                  <span>Расходы</span>
                 </button>
               </Tab>
               <Tab
                 key="1"
-                className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                // className="inline-flex flex-col items-center justify-center px-2 group"
+                className="hover:transition-all duration-300 inline-block p-1 rounded ui-not-selected:hover:text-[#111827] ui-not-selected:dark:hover:text-[#A7A29D] ui-selected:text-[#111827] ui-selected:active ui-selected:dark:text-[#A7A29D]"
               >
                 <button
                   type="button"
-                  className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                  // className="hover:transition-all inline-flex flex-col items-center justify-center px-2 hover:text-gray-50 dark:hover:text-[#A7A29D] active:text-gray-50 dark:active:text-[#A7A29D] group"
+                  className="inline-flex flex-col items-center justify-center px-2"
                 >
-                  <FaMoneyBillTransfer className="text-xl text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-                  <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                    Долг
-                  </span>
+                  <FaMoneyBillTransfer className="text-xl " />
+                  <span>Долг</span>
                 </button>
               </Tab>
               <Tab
                 key="2"
-                className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                className="hover:transition-all duration-300 inline-block p-1 rounded ui-not-selected:hover:text-[#111827] ui-not-selected:dark:hover:text-[#A7A29D] ui-selected:text-[#111827] ui-selected:active ui-selected:dark:text-[#A7A29D]"
               >
                 <button
                   type="button"
-                  className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                  className="inline-flex flex-col items-center justify-center px-2"
                 >
-                  <IoPeopleSharp className="text-xl text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-                  <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                    Участники
-                  </span>
+                  <IoPeopleSharp className="text-xl" />
+                  <span>Участники</span>
                 </button>
               </Tab>
               <Tab
                 key="3"
-                className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                className="hover:transition-all duration-300 inline-block p-1 rounded ui-not-selected:hover:text-[#111827] ui-not-selected:dark:hover:text-[#A7A29D] ui-selected:text-[#111827] ui-selected:active ui-selected:dark:text-[#A7A29D]"
+
+                // className="inline-flex flex-col items-center justify-center px-2 hover:bg-gray-50 dark:hover:bg-gray-800 group"
               >
                 <button
                   type="button"
-                  className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+                  className="inline-flex flex-col items-center justify-center px-2"
                 >
-                  <BiTransfer className="text-xl text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-                  <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-                    Переводы
-                  </span>
+                  <BiTransfer className="text-xl" />
+                  <span>Переводы</span>
                 </button>
               </Tab>
             </div>
@@ -176,46 +173,16 @@ export function App() {
       )}
       {/* <DatePickerExample /> */}
 
-      {/* <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-        <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
-          <button
-            type="button"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-          >
-            <BsCashCoin className="text-xl text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-              Расходы
-            </span>
-          </button>
-          <button
-            type="button"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-          >
-            <FaMoneyBillTransfer className="text-xl text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-              Долг
-            </span>
-          </button>
-          <button
-            type="button"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-          >
-            <IoPeopleSharp className="text-xl text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-              Участники
-            </span>
-          </button>
-          <button
-            type="button"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-          >
-            <BiTransfer className="text-xl text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" />
-            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-              Переводы
-            </span>
-          </button>
-        </div>
-      </div> */}
+            {selectedIndex != 1 && 
+            
+      <button
+        className="fixed bottom-0 right-0 mr-5 mb-20 rounded-full z-50 bg-[#597A7A] text-[#EFEAE4] text-2xl px-5 py-1 font-bold justify-center text-center"
+        onClick={() => setIsModalForm((prev) => !prev)}
+      >
+        +
+      </button>
+            }
+
     </>
   )
 }
