@@ -65,7 +65,6 @@ const CreateExpenseForm = ({
           <label>Название траты</label>
           <input
             {...register("name", { required: true })}
-            // className="mt-1 mb-5 appearance-none shadow rounded w-full py-2 px-2 leading-tight focus:outline-none focus:shadow-outline dark:bg-[#A7A29D]"
             className="peer mt-1 mb-5 py-2 ps-3 block w-full bg-[#EFEAE4] border-transparent rounded  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-[#262019] dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
             id="name"
             type="text"
@@ -84,28 +83,6 @@ const CreateExpenseForm = ({
             id="date"
             type="date"
           />
-
-          {/* <div className="sm:col-span-3">
-            <label
-              htmlFor="country"
-              className="block font-medium leading-6"
-            >
-              Country
-            </label>
-            <div className="mt-2">
-              <select
-                id="country"
-                name="country"
-                autoComplete="country-name"
-                className="block w-full rounded border-0 py-2 shadow ring-0 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6 dark:bg-[#262019]"
-              >
-                <option>United States</option>
-                <option>Canada</option>
-                <option>Mexico</option>
-              </select>
-            </div>
-          </div> */}
-
           <label className="mb-1">Кто оплатил</label>
           <Select
             description=""
@@ -147,7 +124,6 @@ const CreateExpenseForm = ({
             Отмена
           </button>
           <button
-            // className="rounded bg-[#D0EFB3] px-4 py-2 text-sm font-medium text-[#262019] hover:bg-[#79a54f] focus:bg-[#79a54f]"
             className="inline-flex justify-center rounded border border-transparent dark:bg-[#B7D29F] bg-[#D0EFB3] px-4 py-2 text-sm font-medium text-[#111827] hover:bg-[#79a54f] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             Ok
