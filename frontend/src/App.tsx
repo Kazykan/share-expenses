@@ -173,15 +173,16 @@ export function App() {
       )}
       {/* <DatePickerExample /> */}
 
-            {selectedIndex != 1 && 
-            
+
+{/* Не показывать кнопку в долгах и при открытии модального окна добавления */}
+      {(selectedIndex != 1 && !isModalForm) ? (
       <button
         className="fixed bottom-0 right-0 mr-5 mb-20 rounded-full z-50 bg-[#597A7A] text-[#EFEAE4] text-2xl px-5 py-1 font-bold justify-center text-center"
         onClick={() => setIsModalForm((prev) => !prev)}
       >
         +
       </button>
-            }
+            ) : ''}
 
     </>
   )
