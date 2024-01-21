@@ -12,3 +12,9 @@ export interface CreateTUserProps {
   telegramUserId: number
   telegram_username: string | undefined
 }
+
+export interface TabGroupsProps {
+  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>
+  selectedIndex: number
+  placeId: number
+}
