@@ -57,8 +57,7 @@ export default function PlaceList({
       {/* Если Id не определен, а если определен то смотрим есть ли такой пользователь в БД, если нет запускаем его создание */}
       {TUserQuery?.length !== 0 && IdTelegramApp !== undefined ? (
         <div className="px-2">
-          {/* <ol className="relative border-s border-gray-200 dark:border-gray-700"> */}
-          {dataPlaces ? (
+          {dataPlaces?.length ? (
             <div className="py-3">
               <div className="mx-auto max-w-sm space-y-4 rounded-lg p-4">
                 {dataPlaces.map((place: Place) => (
@@ -98,45 +97,19 @@ export default function PlaceList({
               </div>
             </div>
           ) : (
-            // dataPlaces.map((place: Place) => (
-            // <li className="mb-6 ms-4 pt-2" key={place.id}>
-            //   <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-            //   <div className="mb-2 flex justify-between text-l font-semibold text-gray-900 dark:text-white">
-            //     <div>
-            //       <button onClick={() => setPlaceId(place.id!)}>
-            //         {place.name}
-            //       </button>
-            //     </div>
-            //   </div>
-            //   <div className="flex justify-between mb-2 text-sm font-normal text-gray-500 dark:text-gray-400">
-            //     <div>
-            //       {place.id && (
-            //         <a
-            //           href="#"
-            //           className="inline-block px-2 py-0.5 text-sm font-sm rounded-md bg-blue-200 dark:bg-violet-400 dark:text-gray-900"
-            //           onClick={() => mutation.mutate(place.id!)}
-            //         >
-            //           Удалить
-            //         </a>
-            //       )}{" "}
-            //       Ред.
-            //     </div>
-            //   </div>
-            // </li>
-            // ))
             <>
               <img
                 src={"./Share-expenses_add_place.png"}
                 className="px-6 py-1"
               />
 
-              <p className="p-3 mt-1 text-sm text-gray-500 dark:text-gray-300">
+              <p className="p-3 mt-1 text-sm text-[#32371C] dark:text-[#D5D0CA] text-center">
                 {telegram_username} Разделите расходы в поездках и мероприятиях.
                 Добавьте место для начало работы.
               </p>
             </>
           )}
-          {/* </ol> */}
+
         </div>
       ) : (
         <>

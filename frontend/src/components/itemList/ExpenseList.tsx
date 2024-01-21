@@ -25,7 +25,7 @@ function ExpenseList({ placeId }: PlaceIdProps) {
       <div className="px-2">
         <div className="py-3">
           <div className="mx-auto max-w-sm space-y-4 rounded-lg p-1">
-            {dataExpense ? (
+            {dataExpense?.length ? (
               dataExpense.map((expense: Expense) => (
                 <div
                   className="px-3 py-3 rounded dark:bg-[#3D3A37] bg-white text-[#32371C] dark:text-[#D5D0CA] shadow"
@@ -64,7 +64,7 @@ function ExpenseList({ placeId }: PlaceIdProps) {
                 </div>
               ))
             ) : (
-              <h2 className="text-lg font-medium text-gray-800 dark:text-white">
+              <h2 className="text-center text-lg font-medium text-gray-800 dark:text-white">
                 Поездок нет
               </h2>
             )}

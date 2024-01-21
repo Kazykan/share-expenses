@@ -69,41 +69,48 @@ function MemberList({ placeId }: PlaceIdProps) {
       {isSuccess && (
         <div className="py-3">
           <div className="mx-auto max-w-sm space-y-4 rounded p-0">
-            {dataUsers.map((member: Member) => (
-              <div
-                className="px-3 py-3 rounded dark:bg-[#3D3A37] bg-white text-[#32371C] dark:text-[#D5D0CA] shadow"
-                key={member.id}
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p>{member.username}</p>
+            {dataUsers.length ? (
+              dataUsers.map((member: Member) => (
+                <div
+                  className="px-3 py-3 rounded dark:bg-[#3D3A37] bg-white text-[#32371C] dark:text-[#D5D0CA] shadow"
+                  key={member.id}
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p>{member.username}</p>
+                    </div>
+                    <div className="text-lg space-x-5">
+                      <button className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                        <CiEdit />
+                      </button>
+                      <button className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
+                        <CiTrash />
+                      </button>
+                    </div>
                   </div>
-                  <div className="text-lg space-x-5">
-                    <button className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
-                      <CiEdit />
-                    </button>
-                    <button className="rounded px-2 py-1 hover:bg-gray-200 dark:focus:bg-[#597A7A] dark:hover:bg-[#8EBCBD]">
-                      <CiTrash />
-                    </button>
-                  </div>
+                  <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
+                    Потратил(a) всего:{" "}
+                    {currencyFormatMoney(userExpensesSum(member.id!))}
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
+                    Баланс:{" "}
+                    {BalanceUser(member.id!) >= 0 ? (
+                      <span className="text-lime-600">
+                        {currencyFormatMoney(BalanceUser(member.id!))}
+                      </span>
+                    ) : (
+                      <span className="text-orange-600">
+                        {currencyFormatMoney(BalanceUser(member.id!))}
+                      </span>
+                    )}
+                  </p>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
-                  Потратил(a) всего:{" "}
-                  {currencyFormatMoney(userExpensesSum(member.id!))}
-                </p>
-                <p className="text-sm text-gray-500 dark:text-[#A7A29D]">
-                  Баланс: {BalanceUser(member.id!) >= 0 ? (
-                    <span className="text-lime-600">
-                      {currencyFormatMoney(BalanceUser(member.id!))}
-                    </span>
-                  ) : (
-                    <span className="text-orange-600">
-                      {currencyFormatMoney(BalanceUser(member.id!))}
-                    </span>
-                  )}
-                </p>
-              </div>
-            ))}
+              ))
+            ) : (
+              <h2 className=" text-center text-lg font-medium text-gray-800 dark:text-white">
+                Нет участников
+              </h2>
+            )}
           </div>
         </div>
       )}
