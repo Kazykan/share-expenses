@@ -1,21 +1,12 @@
-// import { Tab } from "@headlessui/react"
 import { useEffect, useMemo, useState } from "react"
 import { IWebApp } from "./telegram/t.types"
 import ModalForm from "./components/forms/ModalForm"
 import Navbars from "./components/screens/Navbars"
 import PlaceList from "./components/itemList/PlaceList"
-// import MemberList from "./components/itemList/MemberList"
-// import ExpenseList from "./components/itemList/ExpenseList"
-// import MoneyTransferList from "./components/itemList/MoneyTransferList"
-// import DeptAdviceList from "./components/itemList/DeptAdviceList"
-// import { BsCashCoin } from "react-icons/bs"
-// import { FaMoneyBillTransfer } from "react-icons/fa6"
-// import { IoPeopleSharp } from "react-icons/io5"
-// import { BiTransfer } from "react-icons/bi"
+
 import { TabGroup } from "./components/screens/home/TabGroup"
 
 export function App() {
-  // const tableName = ["Расходы", "Долг", "Участники", "Переводы"]
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
   const [placeId, setPlaceId] = useState<number>(0)
   const [isModalForm, setIsModalForm] = useState<boolean>(false)
@@ -90,7 +81,6 @@ export function App() {
           /> */}
         </>
       )}
-      {/* <DatePickerExample /> */}
 
       {/* Не показывать кнопку в долгах и при открытии модального окна добавления */}
       {selectedIndex != 1 && !isModalForm ? (
