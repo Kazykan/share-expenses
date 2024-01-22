@@ -113,8 +113,6 @@ export default function PlaceList({
         </div>
       ) : (
         <>
-          {IdTelegramApp} {TUserQuery?.length}
-          {TUserQuery?.length && <div>length == 0</div>}
           {handleCreateTelegramUser()}
         </>
       )}
