@@ -39,7 +39,7 @@ export function TabGroup({
               className="inline-flex flex-col items-center justify-center px-2"
             >
               <FaMoneyBillTransfer className="text-xl " />
-              <span>Долг</span>
+              <span>Итог</span>
             </button>
           </Tab>
           <Tab
