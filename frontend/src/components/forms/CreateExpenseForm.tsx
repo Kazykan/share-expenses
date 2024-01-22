@@ -16,11 +16,22 @@ const CreateExpenseForm = ({
   setIsModalForm,
   placeId,
 }: setIsModalFormProps) => {
+  type Inputs = {
+    name: string
+    cost: number
+    date: string
+  }
+
   const [whoPaidMemberId, setWhoPaidMemberId] = useState<any>("123")
 
   const { data: dataUsers } = useUsersQuery(placeId!)
 
-  const { register, handleSubmit, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>({
     mode: "onChange",
   })
 
@@ -39,7 +50,7 @@ const CreateExpenseForm = ({
       setIsModalForm((prev) => !prev)
     },
   })
-  console.log(`whoPaidMemberId ${whoPaidMemberId}`)
+
   const onSubmit = (data: any) =>
     mutation.mutate({
       ...data,
@@ -63,15 +74,33 @@ const CreateExpenseForm = ({
       <form onSubmit={handleSubmit((e) => onSubmit(e))}>
         <div>
           <label>Название траты</label>
+          <div className="text-red-500">
+            {errors?.name && <p>{errors.name.message || "Error!"}</p>}
+          </div>
           <input
-            {...register("name", { required: true })}
+            {...register("name", {
+              required: "Введите название траты",
+              minLength: {
+                value: 3,
+                message: "Минимум 3 символа",
+              },
+              maxLength: {
+                value: 25,
+                message: "Максимум 25 символов",
+              },
+            })}
             className="peer mt-1 mb-5 py-2 ps-3 block w-full bg-[#EFEAE4] border-transparent rounded  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-[#262019] dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
             id="name"
             type="text"
           />
+
           <label>Стоимость</label>
+          <div className="text-red-500">
+            {errors?.cost && <p>{errors.cost.message || "Введите положительное число!"}</p>}
+          </div>
           <input
-            {...register("cost", { required: true })}
+            {...register("cost", { required: "Введите стоимость траты",
+          validate: (value) => value >0 })}
             className="peer mt-1 mb-5 py-2 ps-3 block w-full bg-[#EFEAE4] border-transparent rounded  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-[#262019] dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
             id="cost"
             type="number"
@@ -82,6 +111,7 @@ const CreateExpenseForm = ({
             className="mt-1 mb-5 py-2 ps-3 block w-full bg-[#EFEAE4] border-transparent rounded  focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-[#262019] dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600"
             id="date"
             type="date"
+            defaultValue={new Date().toISOString().substr(0, 10)}
           />
           <label className="mb-1">Кто оплатил</label>
           <Select
@@ -123,9 +153,7 @@ const CreateExpenseForm = ({
           >
             Отмена
           </button>
-          <button
-            className="inline-flex justify-center rounded border border-transparent dark:bg-[#B7D29F] bg-[#D0EFB3] px-4 py-2 text-sm font-medium text-[#111827] hover:bg-[#79a54f] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-          >
+          <button className="inline-flex justify-center rounded border border-transparent dark:bg-[#B7D29F] bg-[#D0EFB3] px-4 py-2 text-sm font-medium text-[#111827] hover:bg-[#79a54f] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
             Ok
           </button>
         </div>
